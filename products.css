@@ -1,5 +1,5 @@
 /* CSS code for Simpsons grades case study example */
-#navigation li {
+#carrello li,#navigation li,#pay li,#addToCard {
   display: inline;
   padding: 0.5em;
   background-color: #ddd;
@@ -7,6 +7,11 @@
   margin: 1em 1em 2em 1em;
 }
 
+
+#carrello, #pay{
+
+  text-align: right;
+ }
 h1, #navigation, #flash {
   text-align: center;
 }
@@ -30,4 +35,9 @@ table th, table td {
 h1, h2 {
   margin: 0.5em;
 }
+
+img{
+  width: 25%;
+}
+
 

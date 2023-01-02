@@ -23,7 +23,7 @@ function is_password_correct($name, $password) {
 }
 
 # Returns all grades for the given student, as an associative array.
-function get_grades($name) {
+function get_products($name) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $name = $db->quote($name);
@@ -32,18 +32,6 @@ function get_grades($name) {
                      ");
 }
 
-# Returns all teachers the given student has had, as an associative array.
-function get_teachers($name) {
-  global $dbconnstring, $dbuser, $dbpasswd;
-  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  $name = $db->quote($name);
-  return $db->query("SELECT DISTINCT t.name AS teachername
-                     FROM grades g
-                     JOIN students s ON g.student_id = s.id
-                     JOIN courses c  ON c.id = g.course_id
-                     JOIN teachers t ON t.id = c.teacher_id
-                     WHERE s.name = $name");
-}
 
 # Redirects current page to login.php if user is not logged in.
 function ensure_logged_in($visitedPage="index.php") {
@@ -53,6 +41,16 @@ function ensure_logged_in($visitedPage="index.php") {
   if (!isset($_SESSION["name"])) {
     redirect("user.php", "You must log in before you can view $visitedPage.");
   }
+}
+
+# Write in db the articles added in the basket.
+function push_addedToBasket($name) {
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $name = $db->quote($name);
+  return $db->query("SELECT * 
+                     FROM products
+                     ");
 }
 
 # Redirects current page to the given URL and optionally sets flash message.

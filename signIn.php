@@ -14,10 +14,10 @@
     <dl>
       <dt>Name</dt>     <dd><input type="text" name="name" ></dd>
       <dt>Password</dt> <dd><input type="password" name="password" ></dd>
+      <dt>Conferma password</dt> <dd><input type="password" name="password" ></dd>
       <dt> </dt>        <dd><input type="submit" value="Log in" ></dd>
     </dl>
   </form>
-  <a href="signIn.php"> Non ancora registrato?</a>
 <?php } ?>
 
 <?php include("bottom.php"); ?>

@@ -5,19 +5,19 @@ ensure_logged_in("products.php");
 ?>
 
 <?php include("top.php"); ?>
-<h2>Prodotti in vendita:</h2>
+<h2>Prodotti nel carrello:</h2>
 
-<div id="productsDiv">
-
-</div>
-
-<table id="productstable">
+<table id="basketProductsTable">
   <tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th></tr>
 
   <?php foreach (get_products($_SESSION["name"]) as $row) { ?>
     <tr>
-      <td><?= $row["name"] ?></td><td><?= $row["type"] ?></td><td><?= $row["price"] ?>€ </td> <td> <img src="<?=  $row["img"] ?>">  <a id="addToCard"> Aggiungi al carrello</a> </td>
+      <td><?= $row["name"] ?></td><td><?= $row["type"] ?></td><td><?= $row["price"] ?>€ </td> <td> <img src="<?=  $row["img"] ?>" > </td>
     </tr>
   <?php } ?>
 </table>
+
+<ul id="pay">
+        <li> <a href="basket.php"> Acquista </a></li>
+</ul>
 <?php include("bottom.php"); ?>

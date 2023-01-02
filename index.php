@@ -1,6 +1,9 @@
 <?php include("top.php"); ?>
 
-<h2>Welcome!</h2>
-<p>This page allows you to log in to Springfield Elementary and check your grades, view your teachers, etc.</p>
 
+
+<div>
+    <h2>Benvenuti!</h2>
+    <p>Queto è il negozio di Salvatore</p>
+</div>
 <?php include("bottom.php"); ?>

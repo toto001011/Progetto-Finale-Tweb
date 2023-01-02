@@ -6,14 +6,21 @@
   <head>
     <title>Salvatore Online Shop</title>
     <link href="products.css" type="text/css" rel="stylesheet">
+    <script src="Visualize.js" type="text/javascript"></script>
+
   </head>
 
+
   <body>
+ 
     <h1>Salvatore Online Shop</h1>
+    <ul id="carrello">
+        <li> <a href="basket.php"> CARRELLO </a></li>
+    </ul>
 
     <ul id="navigation">
-      <li><a href="index.php">Main Page</a></li>
-      <li><a href="products.php">Products</a></li>
+      <li><a  href="index.php">Main Page</a></li>
+      <li><a id="productsBtn" href="products.php">Products</a></li>
      <!-- <li><a href="teachers.php">Teachers</a></li> -->
       <li><a href="user.php">Log In/Out</a></li>
     </ul>
