@@ -6,6 +6,8 @@ $dbpasswd = '';
 
 if (!isset($_SESSION)) { session_start(); }
 
+
+
 # Returns TRUE if given password is correct password for this user name.
 function is_password_correct($name, $password) {
   global $dbconnstring, $dbuser, $dbpasswd;
