@@ -1,0 +1,6 @@
+CREATE TABLE products(
+    Id int PRIMARY KEY,
+    name varchar(20),
+    type varchar(20),
+    img blob
+    );

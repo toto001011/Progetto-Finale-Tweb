@@ -1,0 +1,33 @@
+/* CSS code for Simpsons grades case study example */
+#navigation li {
+  display: inline;
+  padding: 0.5em;
+  background-color: #ddd;
+  border: 3px outset gray;
+  margin: 1em 1em 2em 1em;
+}
+
+h1, #navigation, #flash {
+  text-align: center;
+}
+
+table th {
+  border-bottom: 1px solid #aaa;
+  text-align: left;
+}
+
+table th, table td {
+  padding-right: 1em;
+}
+
+#flash {
+  background-color: #ffffcc;
+  border: 1px dotted #ccccaa;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+h1, h2 {
+  margin: 0.5em;
+}
+
