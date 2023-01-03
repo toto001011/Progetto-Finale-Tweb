@@ -9,6 +9,19 @@ ensure_logged_in("products.php");
 
 <p id="productsDiv">
 
+
+
+
+
 </p>
+
+
+<table id="productstable">
+  <tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th></tr>
+
+  
+</table>
+  
+
 
 <?php include("bottom.php"); ?>

@@ -24,6 +24,17 @@ function is_password_correct($name, $password) {
   }
 }
 
+if (isset($_POST['get_all_products'])) {
+  # Returns all grades for the given student, as an associative array.
+  function get_all_products() {
+    global $dbconnstring, $dbuser, $dbpasswd;
+    $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+    print("GRETT");
+    return $db->query("SELECT * 
+                      FROM products
+                      ");
+  }
+}
 # Returns all grades for the given student, as an associative array.
 function get_products($name) {
   global $dbconnstring, $dbuser, $dbpasswd;
@@ -63,5 +74,26 @@ function redirect($url, $flash_message = NULL) {
   # session_write_close();
   header("Location: $url");
   die;
+}
+
+function showProd(){
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $name = $db->quote($name);
+  
+
+  if ($result->num_rows > 0) {
+    // output data of each rows
+  
+    while($row = $result->fetch_assoc()) {
+       $arrayProd=array($row["name"],$row["type"],$row["price"],$row["img"]);
+
+        $prod=json_encode($arrayProd);
+        echo $prod;
+
+     //s  print( $row["name"]." ".$row["type"]." ".$row["price"]." ".$row["img"]."\n");
+    }
+    
+    
+  }
 }
 ?>

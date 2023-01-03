@@ -6,39 +6,47 @@
 <?php 
 
 
-        $servername = "localhost";
-        $database = "shop";
-        $username = "root";
-        $password = "";
-       // $query="SELECT * FROM products";
+
+
+        $dbconnstring = 'mysql:dbname=shop;host=localhost:3306';
+        $dbuser = 'root';
+        $dbpasswd = '';
+       $query="SELECT * FROM products";
 
         // Create connection
-        $conn = mysqli_connect($servername, $username, $password, $database);
+        //$conn = mysqli_connect($servername, $username, $password, $database);
+        $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+
+        $query_risult= $db->query("SELECT * FROM products ");
         // Check connection
-        if (!$conn) {
+        if (!$db) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
         //$query = "SELECT COUNT(*) FROM movies WHERE rank >= 8.5";
 
-        $result = $conn->query("SELECT * FROM products");
+       // $result = $conn->query($query);
 
 
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-               print( $row["name"]." ".$row["type"]." ".$row["price"]." ".$row["img"]."\n");
-            }
-            ?><br><?php
-            //echo json_encode($row);
+       // if ($result->num_rows > 0) {
+            // output data of each rows
+          
+            while($row = $query_risult->fetch()) {
+              // $arrayProd=array($row["name"],$row["type"],$row["price"],$row["img"]);
+    
+                //$prod=json_encode($arrayProd);
+                 ?><img src="<?=$row["img"] ?>"> <?php;
+
+             }
             
-          }
+            
+         // }
 
  
 
           
    
-        mysqli_close($conn);
+       // mysqli_close($conn);
     
 ?>
 
