@@ -23,15 +23,16 @@
 
       
             while($row = $query_risult->fetch()) {
-              //$arrayProd[]=array("name"=>$row["name"],"type"=>$row["type"],"price"=>$row["price"],"img"=>$row["img"]);
-             $arrayProd[]=array('name'=> $row["name"],'type'=> $row["type"],"price"=>$row["price"],"img"=>base64_encode($row["img"]));
+              $arrayProd[]=array("name"=>$row["name"],"type"=>$row["type"],"price"=>$row["price"],"img"=>base64_encode($row["img"]));
+            // $arrayProd[]=array('name'=> $row["name"],'type'=> $row["type"],"price"=>$row["price"]);
               
               
 
 
              }
-             echo json_encode($arrayProd[1]);
-             
+              //$res= JSON.stringify($arrayProd);
+             echo json_encode($arrayProd);
+             //echo json_encode($arrayProd[1]);
 
              
 
