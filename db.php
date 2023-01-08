@@ -35,13 +35,13 @@ if (isset($_POST['get_all_products'])) {
                       ");
   }
 }
-# Returns all grades for the given student, as an associative array.
-function get_products($name) {
+#Insert a new User 
+function sign_new_user($name,$password) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $name = $db->quote($name);
-  return $db->query("SELECT * 
-                     FROM products
+  $password = $db->quote($password);
+   $db->query("INSERT INTO clienti values('',$name,$password)
                      ");
 }
 

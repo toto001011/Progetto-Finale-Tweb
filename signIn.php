@@ -1,23 +1,51 @@
-<?php include("top.php"); ?>
+<?php
+# The student login form submits to here.
+# Upon login, remembers student login name in a PHP session variable.
+include("db.php");
+$nome=$_POST["name1"];//json_decode($_POST['data']);
+  $password =$_POST["password"]; //$_POST['password'];
+ // redirect("signIn.php", "SignIn successful! Welcome nome->  $nome |-------------|  pass->$password");
+ /* if (is_password_correct($name, $password)) {
+    if (isset($_SESSION)) {
+        if(isset($_SESSION["currentPage"])) 
+            $currentPage = $_SESSION["currentPage"];
+        else {
+            $currentPage = NULL;
+            unset($currentPage);
+        }
+            
+        session_destroy();
+        //session_regenerate_id(TRUE);
+        session_start();
+    }
+    $_SESSION["name"] = $name;     # start session, remember user info
+    if(isset($currentPage)) 
+        redirect($currentPage, "Login successful! Welcome back.");
+       else 
+        redirect("index.php", "Login successful! Welcome back.");
+    }
+    else {
+        redirect("user.php", "Incorrect user name and/or password.");
+    }
+}*/
+    sign_new_user($nome,$password);
+   //$_SESSION["name"] = $name;     # start session, remember user info
+   //echo($name);
+ //  $name=json_decode(stripslashes($_POST['data']));
+ //cho("nome-> "+$nome+" pass->"+$password);
+ //echo($password);
 
-<?php if (isset($_SESSION["name"])) { ?>
-  <h2>User Status</h2>
-  <p>You are logged in as <?= $_SESSION["name"] ?>.</p>
-  
-  <form id="logout" action="logout.php" method="post">
-    <input type="submit" value="Log out" >
-    <input type="hidden" name="logout" value="true" >
-  </form>
-<?php } else { ?>
-  <h2>Log in</h2>
-  <form id="login" action="login.php" method="post">
-    <dl>
-      <dt>Name</dt>     <dd><input type="text" name="name" ></dd>
-      <dt>Password</dt> <dd><input type="password" name="password" ></dd>
-      <dt>Conferma password</dt> <dd><input type="password" name="password" ></dd>
-      <dt> </dt>        <dd><input type="submit" value="Log in" ></dd>
-    </dl>
-  </form>
-<?php } ?>
+/*
+   foreach($data as $d){
+     echo $d;
+  };
+*/
 
-<?php include("bottom.php"); ?>
+      
+
+
+
+
+
+
+?>

@@ -8,6 +8,7 @@
     <link href="products.css" type="text/css" rel="stylesheet">
     <script src="jquery-3.6.1.js"></script>
     <script src="Visualize.js" type="text/javascript"></script>
+     <script scr="checkPassword.js" type="text/javascript"></script> 
 
   </head>
 

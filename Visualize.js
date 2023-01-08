@@ -4,7 +4,7 @@ $(document).ready(function(){
   $.ajax({
     url: 'visualize_products.php',
     type: 'POST',
-    data: {query: $("SELECT * FROM products").val()},
+    data: {},
     dataType: 'json',
     success: function(response) {
 
@@ -53,19 +53,68 @@ $(document).ready(function(){
 });
 
 
+function check_password(){
+  var password1 = document.getElementById("password1").value;
+  var password2 = document.getElementById("password2").value;
+  var nome = document.getElementById("name").value;
+
+  if(password1===password2){
+    //addToDb();
+   /* $.post('signIn.php',{name:'nome'}, function(data) {
+      // Handle the response from the PHP script
+
+      alert("PHP CODE EXECUTED")
+    });
+    var obj = {};
+    obj["name"] = "nome";
+
+
+    var jsonString = JSON.stringify(nome);
+*/
+    $.ajax({
+      type: 'POST',
+      url:'signIn.php',
+      //contentType: 'text',
+      //dataType: 'text',
+      data: "name1="+nome +"&password=" + password1   
+          //name: "nome"
+         
+      ,
+      success: function(response){
+        alert("PHP CODE EXECUTED"+ response);
+
+      },
+      error: function(e) {
+        //called when there is an error
+        alert("PHP CODE ERROR");
+
+        console.log(e.message);
+        }
+  
+    });
+
+    alert("PASSWORD UGUALI "+nome+" "+password1+" "+password2);
+   
+   
+  }else{
+    alert("PASSWORD DIVERSE"+password1+password2);
+  }
+
+
+}
 
 
 /*
-function showProducts(){
+function addToDb(){
   $.ajax({
-    url: 'db1.php',
-    type: 'GET',
-    data: {query: $("SELECT * FROM products").val()},
+    url: 'SignIn.php',
+    type: 'POST',
+    data: {name:document.getElementById("password1").value,password:document.getElementById("password1").value},
    
     success: function(response) {
 
     //called when successful
-    $('#productsDiv').html(response);
+    alert("DATA PASSED TO PHP");
     },
     error: function(e) {
     //called when there is an error

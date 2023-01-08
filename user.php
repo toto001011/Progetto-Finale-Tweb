@@ -17,7 +17,7 @@
       <dt> </dt>        <dd><input type="submit" value="Log in" ></dd>
     </dl>
   </form>
-  <a href="signIn.php"> Non ancora registrato?</a>
+  <a href="newUser.php"> Non ancora registrato?</a>
 <?php } ?>
 
 <?php include("bottom.php"); ?>

@@ -40,4 +40,11 @@ img{
   width: 150px;
 }
 
+input:invalid{
+  background-color: red;
+}
+
+input name :valid{
+  background-color: green;
+}
 
