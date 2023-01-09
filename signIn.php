@@ -29,7 +29,8 @@ $nome=$_POST["name1"];//json_decode($_POST['data']);
     }
 }*/
     sign_new_user($nome,$password);
-   //$_SESSION["name"] = $name;     # start session, remember user info
+   $_SESSION["name"] = $name;     # start session, remember user info
+   redirect("user.php", "Signin successful! Welcome .");
    //echo($name);
  //  $name=json_decode(stripslashes($_POST['data']));
  //cho("nome-> "+$nome+" pass->"+$password);

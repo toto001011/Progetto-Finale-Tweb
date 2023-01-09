@@ -29,7 +29,6 @@ if (isset($_POST['get_all_products'])) {
   function get_all_products() {
     global $dbconnstring, $dbuser, $dbpasswd;
     $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-    print("GRETT");
     return $db->query("SELECT * 
                       FROM products
                       ");
@@ -43,6 +42,22 @@ function sign_new_user($name,$password) {
   $password = $db->quote($password);
    $db->query("INSERT INTO clienti values('',$name,$password)
                      ");
+}
+
+#Insert a new User 
+function addToBasket($name,$password,$idP) {
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $name = $db->quote($name);
+  $password = $db->quote($password);
+  $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
+  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
+ $idC = $query_idC->fetchColumn();
+
+  $db->query("INSERT INTO carrello VALUES($idC,$idP)");
+   /*/$db->query("SELECT * FROM carrello
+              WHERE idC in (SELECT id FROM clienti WHERE name=$name)
+                    ");*/
 }
 
 

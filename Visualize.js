@@ -28,15 +28,17 @@ $(document).ready(function(){
      // var dataURI = 'data:image/jpeg;base64'+response[i].img;
     
      //document.getElementById('productstable').appendChild(img)
-     $('#productstable').append('<tr><td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+ '<td id="id_td">' +'</td>' + '<td><a href="basket.php">'+"Aggiungi al carrello" +'</a></td>+</tr>');
+     $('#productstable').append('<tr><td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+ '<td id="id_td">' +'</td>' + '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>+</tr>');
 //     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
-
-     $('#id_td').attr('id', 'id'+i);
-
+      $idP=response[i].id;
+     $('#id_td').attr('id', 'id'+$idP);
+     //?compna=",$compname,"
+     $('#idP' ).prop("href", "addToBasket.php?idP="+$idP);
+     $('#idP').attr('id', 'idP'+$idP);
      var img=new Image();
      img.src = 'data:image/png;base64,' + response[i].img;
 
-     var imageCell = document.getElementById("id"+i);
+     var imageCell = document.getElementById("id"+$idP);
      imageCell.innerHTML = ""; // Clear the cell's contents
      imageCell.appendChild(img); 
         
@@ -102,6 +104,32 @@ function check_password(){
 
 
 }
+
+/*function addToBasket(){
+
+  $("id").click(function(){
+
+    $.ajax({
+      url: 'SignIn.php',
+      type: 'POST',
+      data: {name:document.getElementById("password1").value,password:document.getElementById("password1").value},
+     
+      success: function(response) {
+  
+      //called when successful
+      alert("DATA PASSED TO PHP");
+      },
+      error: function(e) {
+      //called when there is an error
+      console.log(e.message);
+      }
+      });
+  })
+
+  
+
+  
+}*/
 
 
 /*

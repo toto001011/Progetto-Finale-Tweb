@@ -19,6 +19,7 @@ if (isset($_REQUEST["name"]) && isset($_REQUEST["password"])) {
         session_start();
     }
     $_SESSION["name"] = $name;     # start session, remember user info
+    $_SESSION["password"]=$password;
     if(isset($currentPage)) 
         redirect($currentPage, "Login successful! Welcome back.");
        else 
