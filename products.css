@@ -8,9 +8,10 @@
 }
 
 
-#carrello, #pay{
+#carrello, #pay,#checkout{
 
   text-align: right;
+  list-style-type: none;
  }
 h1, #navigation, #flash {
   text-align: center;

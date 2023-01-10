@@ -8,14 +8,14 @@ if (isset($_SESSION)){
 
 $nome=$_SESSION["name"];
   $password =$_SESSION["password"]; //$_POST['password'];
-$idP=$_GET["idP"];
+$idP=$_POST["idP"];
   // $_SESSION["name"] = $name;     # start session, remember user info
 
-  //incBasketQty($nome,$password,$idP);
-  addToBasket($nome,$password,$idP);
-   redirect("products.php", "Added to Basket");
+  decBasketQty($nome,$password,$idP);
+   //redirect("products.php", "Added to Basket");
+   echo("PHP EXECUTED");
 }else{
-        redirect("login.php", "You must log in before you can view this page.");
+       // redirect("login.php", "You must log in before you can view this page.");
 }
    //echo($name);
  //  $name=json_decode(stripslashes($_POST['data']));

@@ -8,10 +8,18 @@ ensure_logged_in("basket.php");
 <h2>Prodotti nel carrello:</h2>
 
 <table id="basketProductsTable">
-  
+  <a id="empty"> Nessun Prodotto nel Carrello</a>
+  <tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>
+
 </table>
+<ul id="checkout">
+        
+       
+</ul>
 
 <ul id="pay">
+
         <li> <a href="basket.php"> Acquista </a></li>
 </ul>
+
 <?php include("bottom.php"); ?>

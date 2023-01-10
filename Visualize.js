@@ -16,7 +16,7 @@ $(document).ready(function(){
    // response = $.parseJSON(response);
 
           // Decode the base64-encoded image
-    var imageData = atob(response[1].img);
+   // var imageData = atob(response[1].img);
     
 
     // Set the src attribute of the image object to the decoded data URI
@@ -55,6 +55,62 @@ $(document).ready(function(){
 });
 
 
+$(document).ready(function(){
+  //  $("#productsBtn").on('click',function(){
+    $.ajax({
+      url: 'visualize_basket.php',
+      type: 'POST',
+      data: {},
+      dataType: 'json',
+      success: function(response_basket) {
+  
+      //called when successful
+      console.log(response_basket);
+      $('#productsDiv').html(response_basket);
+      response=JSON.parse(JSON.stringify(response_basket))
+    
+      var trHTML = '';
+      var totBasket=0;
+      $.each(response_basket, function (i, item) {
+
+        $idP=response_basket[i].id;
+
+       $('#empty').innerHTML=" ";
+      
+       $('#basketProductsTable').append('<tr><td>'+response_basket[i].name+'</td>'+'<td>'+response_basket[i].type+'</td>'+'<td>'+response_basket[i].price+'€ </td>'+ '<td id="id_td">' +'</td><td>'+'<button id="btnDec" type="button" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+'<button type="button" onclick="incBasketQty()" id="btnInc"> +' +'</button>'+'</td></tr>');
+      
+       totBasket=totBasket+response_basket[i].price*response_basket[i].qty;  
+       
+       $('#id_td').attr('id', 'id'+$idP);
+       
+       $('#btnInc' ).attr("onclick", "incBasketQty("+$idP+")");
+       $('#btnDec' ).attr("onclick", "decBasketQty("+$idP+")");
+
+       $('#btnInc').attr('id', 'btnInc'+$idP);
+       $('#btnDec').attr('id', 'btnDec'+$idP);
+
+
+       $('#idP').attr('id', 'idP'+$idP);
+       var img=new Image();
+       img.src = 'data:image/png;base64,' + response_basket[i].img;
+  
+       var imageCell = document.getElementById("id"+$idP);
+       imageCell.innerHTML = ""; // Clear the cell's contents
+       imageCell.appendChild(img); 
+          
+       //$('#productstable').appendChild(img);
+      });
+      $('#checkout').append('<li><a><h3>'+ "TOTALE: "+ totBasket+"€"+'</h3></a></li>');
+      
+  },
+      error: function(e) {
+      //called when there is an error
+      console.log(e.message);
+      }
+      });
+   // });
+  });
+
 function check_password(){
   var password1 = document.getElementById("password1").value;
   var password2 = document.getElementById("password2").value;
@@ -83,7 +139,7 @@ function check_password(){
          
       ,
       success: function(response){
-        alert("PHP CODE EXECUTED"+ response);
+        //alert("PHP CODE EXECUTED"+ response);
 
       },
       error: function(e) {
@@ -105,31 +161,69 @@ function check_password(){
 
 }
 
-/*function addToBasket(){
+function incBasketQty(idP){
 
-  $("id").click(function(){
-
-    $.ajax({
-      url: 'SignIn.php',
-      type: 'POST',
-      data: {name:document.getElementById("password1").value,password:document.getElementById("password1").value},
-     
-      success: function(response) {
   
-      //called when successful
-      alert("DATA PASSED TO PHP");
+  alert("CLICKED");
+
+  
+   $.ajax({
+      type: 'POST',
+      url:'incBasketQty.php',
+      //contentType: 'text',
+      //dataType: 'text',
+      data: "idP="+idP  
+          //name: "nome"
+         
+      ,
+      success: function(response){
+        alert("PHP CODE EXECUTED"+ response);
+
       },
       error: function(e) {
-      //called when there is an error
-      console.log(e.message);
-      }
-      });
-  })
+        //called when there is an error
+        alert("PHP CODE ERROR");
 
+        console.log(e.message);
+        }
+  
+    });
   
 
   
-}*/
+}
+
+function decBasketQty(idP){
+
+  
+  alert("CLICKED");
+
+  
+   $.ajax({
+      type: 'POST',
+      url:'decBasketQty.php',
+      //contentType: 'text',
+      //dataType: 'text',
+      data: "idP="+idP  
+          //name: "nome"
+         
+      ,
+      success: function(response){
+        alert("PHP CODE EXECUTED"+ response);
+
+      },
+      error: function(e) {
+        //called when there is an error
+        alert("PHP CODE ERROR");
+
+        console.log(e.message);
+        }
+  
+    });
+  
+
+  
+}
 
 
 /*

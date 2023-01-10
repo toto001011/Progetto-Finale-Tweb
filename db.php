@@ -50,14 +50,68 @@ function addToBasket($name,$password,$idP) {
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $name = $db->quote($name);
   $password = $db->quote($password);
+  
   $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
-  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
- $idC = $query_idC->fetchColumn();
+  $idC = $query_idC->fetchColumn();  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
 
-  $db->query("INSERT INTO carrello VALUES($idC,$idP)");
+
+
+  $alredyBuy_query=$db->query("SELECT COUNT(idC) FROM carrello WHERE idP=$idP AND idC=$idC");  //$db->query("INSERT INTO carrello VALUES($idC,$idP)");
+  $alredyBuy = $alredyBuy_query->fetchColumn();  //SELECT COUNT(idP) FROM carrello WHERE idP=2 and idC=9
+
+  
+  if($alredyBuy>0){
+    $query_act_qty=$db->query("SELECT qty FROM carrello WHERE idP=$idP AND idC=$idC");
+    $act_qty = $query_act_qty->fetchColumn();
+    $act_qty=$act_qty+1;
+    $db->query("UPDATE carrello SET qty=$act_qty WHERE idC=$idC AND idP=$idP");
+  }else{
+    $db->query("INSERT INTO carrello VALUES($idC,$idP,1)");
+  }
    /*/$db->query("SELECT * FROM carrello
               WHERE idC in (SELECT id FROM clienti WHERE name=$name)
                     ");*/
+}
+
+#Insert a new User 
+function incBasketQty($name,$password,$idP) {
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $name = $db->quote($name);
+  $password = $db->quote($password);
+  
+  $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
+  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
+  $idC = $query_idC->fetchColumn();
+
+ $query_act_qty=$db->query("SELECT qty FROM carrello WHERE idP=$idP AND idC=$idC");
+ $act_qty = $query_act_qty->fetchColumn();
+ $act_qty=$act_qty+1;
+  //$db->query("INSERT INTO carrello VALUES($idC,$idP)");
+  $db->query("UPDATE carrello SET qty=$act_qty WHERE idC=$idC AND idP=$idP");
+  
+   /*/$db->query("SELECT * FROM carrello
+              WHERE idC in (SELECT id FROM clienti WHERE name=$name)
+                    ");*/
+}
+
+#Insert a new User 
+function decBasketQty($name,$password,$idP) {
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $name = $db->quote($name);
+  $password = $db->quote($password);
+  
+  $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
+  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
+  $idC = $query_idC->fetchColumn();
+
+ $query_act_qty=$db->query("SELECT qty FROM carrello WHERE idP=$idP AND idC=$idC");
+ $act_qty = $query_act_qty->fetchColumn();
+ $act_qty=$act_qty-1;
+  //$db->query("INSERT INTO carrello VALUES($idC,$idP)");
+  $db->query("UPDATE carrello SET qty=$act_qty WHERE idC=$idC AND idP=$idP");
+   
 }
 
 
@@ -76,9 +130,12 @@ function push_addedToBasket($name) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $name = $db->quote($name);
+  $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
+  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
+  $idC = $query_idC->fetchColumn();
   return $db->query("SELECT * 
                      FROM products
-                     ");
+                     WHERE idC=$idC");
 }
 
 # Redirects current page to the given URL and optionally sets flash message.
