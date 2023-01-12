@@ -4,6 +4,7 @@
 include("db.php");
 $nome=$_POST["name1"];//json_decode($_POST['data']);
   $password =$_POST["password"]; //$_POST['password'];
+  $email =$_POST["email"]; //$_POST['password'];
  // redirect("signIn.php", "SignIn successful! Welcome nome->  $nome |-------------|  pass->$password");
  /* if (is_password_correct($name, $password)) {
     if (isset($_SESSION)) {
@@ -28,9 +29,13 @@ $nome=$_POST["name1"];//json_decode($_POST['data']);
         redirect("user.php", "Incorrect user name and/or password.");
     }
 }*/
-    sign_new_user($nome,$password);
+    if(strrpos("$email","@")==TRUE && strrpos("$email",".it")==TRUE ){
+     sign_new_user($nome,$password,$email);
+     redirect("newUser.php.php", "Email not correct");
+    }
    $_SESSION["name"] = $name;     # start session, remember user info
-   redirect("user.php", "Signin successful! Welcome .");
+   session_start();
+   redirect("login.php", "Signin successful! Welcome .");
    //echo($name);
  //  $name=json_decode(stripslashes($_POST['data']));
  //cho("nome-> "+$nome+" pass->"+$password);

@@ -35,12 +35,13 @@ if (isset($_POST['get_all_products'])) {
   }
 }
 #Insert a new User 
-function sign_new_user($name,$password) {
+function sign_new_user($name,$password,$email) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $name = $db->quote($name);
   $password = $db->quote($password);
-   $db->query("INSERT INTO clienti values('',$name,$password)
+  $email = $db->quote($email);
+   $db->query("INSERT INTO clienti values('',$email,$name,$password)
                      ");
 }
 

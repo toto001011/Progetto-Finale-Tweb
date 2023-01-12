@@ -111,10 +111,11 @@ $(document).ready(function(){
    // });
   });
 
-function check_password(){
+function check_field(){
   var password1 = document.getElementById("password1").value;
   var password2 = document.getElementById("password2").value;
   var nome = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
 
   if(password1===password2){
     //addToDb();
@@ -134,7 +135,7 @@ function check_password(){
       url:'signIn.php',
       //contentType: 'text',
       //dataType: 'text',
-      data: "name1="+nome +"&password=" + password1   
+      data: "name1="+nome +"&password=" + password1 +"&email=" + email 
           //name: "nome"
          
       ,
