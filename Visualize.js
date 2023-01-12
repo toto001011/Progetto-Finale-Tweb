@@ -66,17 +66,17 @@ $(document).ready(function(){
   
       //called when successful
       console.log(response_basket);
+      $('#basketProductsTable').append("<th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>")
       $('#productsDiv').html(response_basket);
       response=JSON.parse(JSON.stringify(response_basket))
     
       var trHTML = '';
       var totBasket=0;
+      //$('#empty').innerHTML=" ";
+      document.getElementById("empty").innerHTML=" ";
       $.each(response_basket, function (i, item) {
 
-        $idP=response_basket[i].id;
-
-       $('#empty').innerHTML=" ";
-      
+        $idP=response_basket[i].id;      
        $('#basketProductsTable').append('<tr><td>'+response_basket[i].name+'</td>'+'<td>'+response_basket[i].type+'</td>'+'<td>'+response_basket[i].price+'€ </td>'+ '<td id="id_td">' +'</td><td>'+'<button id="btnDec" type="button" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+'<button type="button" onclick="incBasketQty()" id="btnInc"> +' +'</button>'+'</td></tr>');
       
        totBasket=totBasket+response_basket[i].price*response_basket[i].qty;  
@@ -139,6 +139,7 @@ function check_password(){
          
       ,
       success: function(response){
+        
         //alert("PHP CODE EXECUTED"+ response);
 
       },
@@ -164,7 +165,7 @@ function check_password(){
 function incBasketQty(idP){
 
   
-  alert("CLICKED");
+  //alert("CLICKED");
 
   
    $.ajax({
@@ -177,7 +178,8 @@ function incBasketQty(idP){
          
       ,
       success: function(response){
-        alert("PHP CODE EXECUTED"+ response);
+        location.reload(true);
+        //salert("PHP CODE EXECUTED"+ response);
 
       },
       error: function(e) {
@@ -196,7 +198,6 @@ function incBasketQty(idP){
 function decBasketQty(idP){
 
   
-  alert("CLICKED");
 
   
    $.ajax({
@@ -209,7 +210,9 @@ function decBasketQty(idP){
          
       ,
       success: function(response){
-        alert("PHP CODE EXECUTED"+ response);
+        location.reload(true);
+
+        //alert("PHP CODE EXECUTED"+ response);
 
       },
       error: function(e) {

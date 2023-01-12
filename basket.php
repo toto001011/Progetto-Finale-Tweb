@@ -9,7 +9,7 @@ ensure_logged_in("basket.php");
 
 <table id="basketProductsTable">
   <a id="empty"> Nessun Prodotto nel Carrello</a>
-  <tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>
+ <!-- <tr id="label"><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>-->
 
 </table>
 <ul id="checkout">

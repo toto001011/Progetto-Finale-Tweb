@@ -6,13 +6,15 @@ if (isset($_SESSION)){
 
 
 
-$nome="Salvatore";//$_SESSION["name"];
-  $password ="salva";//$_SESSION["password"]; //$_POST['password'];
-$idP=1;//$_POST["idP"];
+$nome=$_SESSION["name"];
+  $password =$_SESSION["password"]; //$_POST['password'];
+$idP=$_POST["idP"];
   // $_SESSION["name"] = $name;     # start session, remember user info
 
   incBasketQty($nome,$password,$idP);
-   //redirect("basket.php", "");
+  //header("Location: basket.php");
+  //header("Refresh:0");
+   //redirect("basket.php", "h");
    echo("PHP EXECUTED");
 }else{
        // redirect("login.php", "You must log in before you can view this page.");

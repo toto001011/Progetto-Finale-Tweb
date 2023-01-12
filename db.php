@@ -109,9 +109,13 @@ function decBasketQty($name,$password,$idP) {
  $query_act_qty=$db->query("SELECT qty FROM carrello WHERE idP=$idP AND idC=$idC");
  $act_qty = $query_act_qty->fetchColumn();
  $act_qty=$act_qty-1;
+ if($act_qty>0){
   //$db->query("INSERT INTO carrello VALUES($idC,$idP)");
   $db->query("UPDATE carrello SET qty=$act_qty WHERE idC=$idC AND idP=$idP");
-   
+ }else{
+  $db->query("DELETE FROM carrello WHERE  idC=$idC AND idP=$idP");
+
+ }
 }
 
 

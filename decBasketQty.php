@@ -12,8 +12,8 @@ $idP=$_POST["idP"];
   // $_SESSION["name"] = $name;     # start session, remember user info
 
   decBasketQty($nome,$password,$idP);
-   //redirect("products.php", "Added to Basket");
-   echo("PHP EXECUTED");
+   redirect("basket.php", "v");
+   //echo("PHP EXECUTED");
 }else{
        // redirect("login.php", "You must log in before you can view this page.");
 }
