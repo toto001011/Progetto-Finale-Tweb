@@ -1,4 +1,4 @@
-
+if (document.location.href.match("products.php")){
 $(document).ready(function(){
 //  $("#productsBtn").on('click',function(){
   $.ajax({
@@ -53,8 +53,9 @@ $(document).ready(function(){
     });
  // });
 });
+}
 
-
+if (document.location.href.match("basket.php")){
 $(document).ready(function(){
   //  $("#productsBtn").on('click',function(){
     $.ajax({
@@ -110,6 +111,54 @@ $(document).ready(function(){
       });
    // });
   });
+}
+
+if (document.location.href.match("productsAdmin.php")){
+$(document).ready(function(){
+//  $("#productsBtn").on('click',function(){
+  $.ajax({
+    url: 'visualize_products.php',
+    type: 'POST',
+    data: {},
+    dataType: 'json',
+    success: function(response) {
+
+    //called when successful
+    console.log(response);
+    $('#productsDiv').html(response);
+    response=JSON.parse(JSON.stringify(response))
+  
+    var trHTML = '';
+    $.each(response, function (i, item) {
+     // var dataURI = 'data:image/jpeg;base64'+response[i].img;
+    
+     //document.getElementById('productstable').appendChild(img)
+     $('#productstable').append('<tr><td>'+'<input id="nameP" type ="text" value="'+response[i].name+'"> </input>'+'</td>'+'<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+'<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+ '<td id="id_td">' +'</td>' +'</tr>');
+//     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
+      $idP=response[i].id;
+     $('#id_td').attr('id', 'img_id'+$idP);
+
+
+     var img=new Image();
+     img.src = 'data:image/png;base64,' + response[i].img;
+
+     var imageCell = document.getElementById("img_id"+$idP);
+     imageCell.innerHTML = ""; // Clear the cell's contents
+     imageCell.appendChild(img); 
+        
+     //$('#productstable').appendChild(img);
+    });
+    $('#productstable').append('<tr><td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button></td></tr>')
+   
+},
+    error: function(e) {
+    //called when there is an error
+    console.log(e.message);
+    }
+    });
+ // });
+});
+}
 
 function check_field(){
   var password1 = document.getElementById("password1").value;
@@ -218,6 +267,45 @@ function decBasketQty(idP){
   
 }
 
+
+//$(document).ready(function() {
+//$("#save_button").click(function(e){
+function saveData(){
+  
+    alert("SAVE BTN CLICKED");
+    var nomeP = document.getElementById("").value;
+    var categoriaP = document.getElementById("password2").value;
+    var prezzoP = document.getElementById("name").value;
+    //var  = document.getElementById("email").value;
+
+
+    $.ajax({
+      type: 'POST',
+      url:'saveModify.php',
+      contentType: 'json',
+      //dataType: 'text',
+      data: "name="+nome +"&password=" + password1 +"&email=" + email 
+          //name: "nome"
+         
+      ,
+      success: function(response){
+        
+        //alert("PHP CODE EXECUTED"+ response);
+        //location.href = "user.php"
+      },
+      error: function(e) {
+        //called when there is an error
+        alert("PHP CODE ERROR");
+
+        console.log(e.message);
+        }
+  
+    });
+
+   
+
+
+}
 
 /*
 function addToDb(){

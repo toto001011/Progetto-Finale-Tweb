@@ -24,6 +24,22 @@ function is_password_correct($email, $password) {
   }
 }
 
+# Returns TRUE if given password is correct password for this user name.
+function is_admin_password_correct($user, $password){
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $name = $db->quote($email);
+  $rows = $db->query("SELECT password FROM clienti WHERE name= '$user' AND email='$user' ");
+  if ($rows) {
+    foreach ($rows as $row) {
+      $correct_password = $row["password"];
+      return $password === $correct_password;
+    }
+  } else { 
+    return FALSE;   # user not found
+  }
+}
+
 if (isset($_POST['get_all_products'])) {
   # Returns all grades for the given student, as an associative array.
   function get_all_products() {
@@ -138,6 +154,17 @@ function ensure_logged_in($visitedPage="index.php") {
 
   if (!isset($_SESSION["email"])) {
     redirect("user.php", "You must log in before you can view $visitedPage.");
+  }
+}
+
+
+# Redirects current page to login.php if user is not logged in.
+function ensure_admin($visitedPage="index.php") {
+  
+  $_SESSION["currentPage"] = $visitedPage;
+
+  if (!isset($_SESSION["admin"])) {
+    redirect("user.php", "You must be an admin to view $visitedPage.");
   }
 }
 
