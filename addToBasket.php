@@ -6,13 +6,13 @@ if (isset($_SESSION)){
 
 
 
-$nome=$_SESSION["name"];
-  $password =$_SESSION["password"]; //$_POST['password'];
+$email=$_SESSION["email"];
+  $password ="radici";//$_SESSION["password"]; //$_POST['password'];
 $idP=$_GET["idP"];
   // $_SESSION["name"] = $name;     # start session, remember user info
 
   //incBasketQty($nome,$password,$idP);
-  addToBasket($nome,$password,$idP);
+  addToBasket($email,$password,$idP);
    redirect("products.php", "Added to Basket");
 }else{
         redirect("login.php", "You must log in before you can view this page.");

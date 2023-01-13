@@ -1,54 +1,83 @@
 <?php
-# The student login form submits to here.
-# Upon login, remembers student login name in a PHP session variable.
 include("db.php");
-$nome=$_POST["name1"];//json_decode($_POST['data']);
-  $password =$_POST["password"]; //$_POST['password'];
-  $email =$_POST["email"]; //$_POST['password'];
- // redirect("signIn.php", "SignIn successful! Welcome nome->  $nome |-------------|  pass->$password");
- /* if (is_password_correct($name, $password)) {
-    if (isset($_SESSION)) {
-        if(isset($_SESSION["currentPage"])) 
-            $currentPage = $_SESSION["currentPage"];
-        else {
-            $currentPage = NULL;
-            unset($currentPage);
-        }
-            
-        session_destroy();
-        //session_regenerate_id(TRUE);
-        session_start();
+if (isset($_REQUEST["email"]) && isset($_REQUEST["password1"])&& isset($_REQUEST["password2"])) {
+  $email = $_REQUEST["email"];
+  $password1 = $_REQUEST["password1"];
+  $password2 = $_REQUEST["password2"];
+  $nome=$_REQUEST["name"];
+
+  if(check_if_exist($email)==TRUE){
+    redirect("user.php", "You already have an accounnt, please login");
+  }
+  
+
+  if($password1===$password2){
+    sign_new_user($nome,$password1,$email);
+    // $_SESSION["email"] = $email;     # start session, remember user info
+    $_SESSION["email"] = $email;     # start session, remember user info
+    // if(isset($currentPage)) 
+        // redirect($currentPage, "Login successful! Welcome back.");
+        // else 
+       redirect("index.php", "SignIn successful! Welcome.");
+    }else{
+        redirect("newUser.php", "The password doesn't match");
     }
-    $_SESSION["name"] = $name;     # start session, remember user info
-    if(isset($currentPage)) 
-        redirect($currentPage, "Login successful! Welcome back.");
-       else 
-        redirect("index.php", "Login successful! Welcome back.");
-    }
-    else {
-        redirect("user.php", "Incorrect user name and/or password.");
-    }
-}*/
-    if(strrpos("$email","@")==TRUE && strrpos("$email",".it")==TRUE ){
-     sign_new_user($nome,$password,$email);
-     redirect("newUser.php.php", "Email not correct");
-    }
-   $_SESSION["name"] = $name;     # start session, remember user info
-   session_start();
-   redirect("login.php", "Signin successful! Welcome .");
-   //echo($name);
- //  $name=json_decode(stripslashes($_POST['data']));
- //cho("nome-> "+$nome+" pass->"+$password);
- //echo($password);
+   }
+   else {
+       redirect("user.php", "Incorrect user name and/or password.");
+   }
+       //redirect("user.php", "Login successful! Welcome back.");
+    
+
+    
+    
+    
+    
+
 
 /*
-   foreach($data as $d){
-     echo $d;
-  };
+
+
+
+
+
+
+
+
+ $password =$_POST["password"]; //$_POST['password'];
+  $email =$_POST["email"]; //$_POST['password'];
+ // redirect("signIn.php", "SignIn successful! Welcome nome->  $nome |-------------|  pass->$password");
+ 
+    if(strrpos("$email","@")==FALSE  ){
+     
+     //redirect("newUser.php", "Email not correct");
+     
+    }else{
+        //if(check_if_exist($email)<=0){
+       // sign_new_user($nome,$password,$email);
+       
+        //redirect("products.php", "Signin successful! Welcome .");
+       // }else{
+            
+       //     redirect("login.php", "You have already an account, please login.");
+
+       // }
+       //echo("PHP CODE=> $email,$password");
+    }
+    redirect("user.php", "Signin successful! please logIn Welcome .");
+    
+
+
+
+
+
+
+
+
+
+
+
 */
-
-      
-
 
 
 

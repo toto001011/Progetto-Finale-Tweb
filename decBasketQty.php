@@ -6,12 +6,12 @@ if (isset($_SESSION)){
 
 
 
-$nome=$_SESSION["name"];
+$email=$_SESSION["email"];
   $password =$_SESSION["password"]; //$_POST['password'];
 $idP=$_POST["idP"];
   // $_SESSION["name"] = $name;     # start session, remember user info
 
-  decBasketQty($nome,$password,$idP);
+  decBasketQty($email,$password,$idP);
    redirect("basket.php", "v");
    //echo("PHP EXECUTED");
 }else{

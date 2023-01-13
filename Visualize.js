@@ -118,31 +118,20 @@ function check_field(){
   var email = document.getElementById("email").value;
 
   if(password1===password2){
-    //addToDb();
-   /* $.post('signIn.php',{name:'nome'}, function(data) {
-      // Handle the response from the PHP script
 
-      alert("PHP CODE EXECUTED")
-    });
-    var obj = {};
-    obj["name"] = "nome";
-
-
-    var jsonString = JSON.stringify(nome);
-*/
     $.ajax({
       type: 'POST',
       url:'signIn.php',
       //contentType: 'text',
       //dataType: 'text',
-      data: "name1="+nome +"&password=" + password1 +"&email=" + email 
+      data: "name="+nome +"&password=" + password1 +"&email=" + email 
           //name: "nome"
          
       ,
       success: function(response){
         
         //alert("PHP CODE EXECUTED"+ response);
-
+        //location.href = "user.php"
       },
       error: function(e) {
         //called when there is an error

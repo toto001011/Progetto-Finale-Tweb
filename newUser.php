@@ -10,7 +10,7 @@
   </form>
 <?php } else { ?>
   <h2>Sign in</h2>
-  <form id="signIn" onsubmit ="return check_field()" method="post" >
+  <form id="signIn" action="signIn.php"  method="post" >
     <dl>
       <dt>Name</dt>     <dd><input type="text" name="name" id ="name"  pattern="[a-z]{>3}" required ></dd>
       <dt>Email</dt>     <dd><input type="text" name="email" id ="email"  pattern="[a-z]{>3}" required ></dd>
@@ -23,4 +23,6 @@
 
 <?php include("bottom.php"); 
 //action="signIn.php" onsubmit ="return check_password()"
+
+//onsubmit ="return check_field()"
 ?>

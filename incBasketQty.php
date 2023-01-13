@@ -6,12 +6,12 @@ if (isset($_SESSION)){
 
 
 
-$nome=$_SESSION["name"];
+$email=$_SESSION["email"];
   $password =$_SESSION["password"]; //$_POST['password'];
 $idP=$_POST["idP"];
   // $_SESSION["name"] = $name;     # start session, remember user info
 
-  incBasketQty($nome,$password,$idP);
+  incBasketQty($email,$password,$idP);
   //header("Location: basket.php");
   //header("Refresh:0");
    //redirect("basket.php", "h");

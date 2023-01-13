@@ -8,12 +8,12 @@ include("login.php");
         $dbuser = 'root';
         $dbpasswd = '';
        $query="SELECT * FROM products";
-      $nameC=$_SESSION["name"];
+      $email=$_SESSION["email"];
         // Create connection
         //$conn = mysqli_connect($servername, $username, $password, $database);
         $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
 
-        $query_risult= $db->query("SELECT * FROM carrello join clienti on(idC=clienti.id) JOIN products on (idP=products.id) WHERE clienti.name='$nameC' ");
+        $query_risult= $db->query("SELECT * FROM carrello join clienti on(idC=clienti.id) JOIN products on (idP=products.id) WHERE clienti.email='$email' ");
         // Check connection
  
 

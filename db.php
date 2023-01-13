@@ -9,11 +9,11 @@ if (!isset($_SESSION)) { session_start(); }
 
 
 # Returns TRUE if given password is correct password for this user name.
-function is_password_correct($name, $password) {
+function is_password_correct($email, $password) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  $name = $db->quote($name);
-  $rows = $db->query("SELECT password FROM clienti WHERE name = $name");
+  $name = $db->quote($email);
+  $rows = $db->query("SELECT password FROM clienti WHERE email = '$email' ");
   if ($rows) {
     foreach ($rows as $row) {
       $correct_password = $row["password"];
@@ -44,25 +44,36 @@ function sign_new_user($name,$password,$email) {
    $db->query("INSERT INTO clienti values('',$email,$name,$password)
                      ");
 }
+function  check_if_exist($email){
 
-#Insert a new User 
-function addToBasket($name,$password,$idP) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  $name = $db->quote($name);
+   $email = $db->quote($email);
+   $query_exist = $db->query("SELECT COUNT(email) FROM clienti WHERE email=$email");
+  $exist = $query_exist->fetchColumn();  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
+  return $exist;
+}
+
+
+
+#Insert a new User 
+function addToBasket($email,$password,$idP) {
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $email = $db->quote($email);
   $password = $db->quote($password);
   
-  $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
+  $query_idC=$db->query("SELECT id FROM clienti WHERE email=$email ");
   $idC = $query_idC->fetchColumn();  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
 
 
 
-  $alredyBuy_query=$db->query("SELECT COUNT(idC) FROM carrello WHERE idP=$idP AND idC=$idC");  //$db->query("INSERT INTO carrello VALUES($idC,$idP)");
+  $alredyBuy_query=$db->query("SELECT COUNT(idC) FROM carrello WHERE idP=$idP AND idC=$idC ");  //$db->query("INSERT INTO carrello VALUES($idC,$idP)");
   $alredyBuy = $alredyBuy_query->fetchColumn();  //SELECT COUNT(idP) FROM carrello WHERE idP=2 and idC=9
 
   
   if($alredyBuy>0){
-    $query_act_qty=$db->query("SELECT qty FROM carrello WHERE idP=$idP AND idC=$idC");
+    $query_act_qty=$db->query("SELECT qty FROM carrello WHERE idP=$idP AND idC=$idC ");
     $act_qty = $query_act_qty->fetchColumn();
     $act_qty=$act_qty+1;
     $db->query("UPDATE carrello SET qty=$act_qty WHERE idC=$idC AND idP=$idP");
@@ -75,13 +86,13 @@ function addToBasket($name,$password,$idP) {
 }
 
 #Insert a new User 
-function incBasketQty($name,$password,$idP) {
+function incBasketQty($email,$password,$idP) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  $name = $db->quote($name);
+  $email = $db->quote($email);
   $password = $db->quote($password);
   
-  $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
+  $query_idC=$db->query("SELECT id FROM clienti WHERE email=$email");
   //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
   $idC = $query_idC->fetchColumn();
 
@@ -97,13 +108,13 @@ function incBasketQty($name,$password,$idP) {
 }
 
 #Insert a new User 
-function decBasketQty($name,$password,$idP) {
+function decBasketQty($email,$password,$idP) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  $name = $db->quote($name);
+  $email = $db->quote($email);
   $password = $db->quote($password);
   
-  $query_idC=$db->query("SELECT id FROM clienti WHERE name=$name");
+  $query_idC=$db->query("SELECT id FROM clienti WHERE email=$email");
   //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
   $idC = $query_idC->fetchColumn();
 
@@ -125,7 +136,7 @@ function ensure_logged_in($visitedPage="index.php") {
   
   $_SESSION["currentPage"] = $visitedPage;
 
-  if (!isset($_SESSION["name"])) {
+  if (!isset($_SESSION["email"])) {
     redirect("user.php", "You must log in before you can view $visitedPage.");
   }
 }
