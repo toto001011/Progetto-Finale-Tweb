@@ -29,7 +29,7 @@ function is_admin_password_correct($user, $password){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $name = $db->quote($email);
-  $rows = $db->query("SELECT password FROM clienti WHERE name= '$user' AND email='$user' ");
+  $rows = $db->query("SELECT password FROM clienti WHERE name= '$user' AND email='$user' AND admin=true ");
   if ($rows) {
     foreach ($rows as $row) {
       $correct_password = $row["password"];
@@ -39,6 +39,9 @@ function is_admin_password_correct($user, $password){
     return FALSE;   # user not found
   }
 }
+
+
+
 
 if (isset($_POST['get_all_products'])) {
   # Returns all grades for the given student, as an associative array.
@@ -50,6 +53,15 @@ if (isset($_POST['get_all_products'])) {
                       ");
   }
 }
+
+#Save data modified by admin
+function update_data($idP,$nameP,$typeP,$priceP,$newImage){
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  
+  $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'  WHERE id='1'");
+}
+
 #Insert a new User 
 function sign_new_user($name,$password,$email) {
   global $dbconnstring, $dbuser, $dbpasswd;

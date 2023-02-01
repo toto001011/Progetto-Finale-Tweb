@@ -5,7 +5,7 @@ include("db.php");
 if (isset($_REQUEST["email"]) && isset($_REQUEST["password"])) {
   $email = $_REQUEST["email"];
   $password = $_REQUEST["password"];
-  if (is_password_correct($email, $password)) {
+  if (is_admin_password_correct($email, $password) ) {
    
     $_SESSION["admin"] = $email;     # start session, remember user info
    // if(isset($currentPage)) 

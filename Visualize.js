@@ -133,10 +133,24 @@ $(document).ready(function(){
      // var dataURI = 'data:image/jpeg;base64'+response[i].img;
     
      //document.getElementById('productstable').appendChild(img)
-     $('#productstable').append('<tr><td>'+'<input id="nameP" type ="text" value="'+response[i].name+'"> </input>'+'</td>'+'<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+'<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+ '<td id="id_td">' +'</td>' +'</tr>');
+     $('#productstable').append('<tr id="prodotto"><td>'+'<input id="nameP" type ="text" value="'+response[i].name+'"> </input>'+'</td>'+'<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+'<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+ '<td id="id_td">' +'</td><td>'+'<input type="file" id="newImage"><button type="submit">Salva Modifiche</button>' +'</td></tr>');
+
+
+     
+  
+  
+
 //     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
       $idP=response[i].id;
+      
+
      $('#id_td').attr('id', 'img_id'+$idP);
+     $('#prodotto').attr('id','id_tr'+$idP);
+     $('#nameP').attr('id','nameP'+$idP);
+     $('#typeP').attr('id','typeP'+$idP);
+     $('#priceP').attr('id','priceP'+$idP);
+     $('#newImage').attr('id','newImage'+$idP);
+     
 
 
      var img=new Image();
@@ -272,25 +286,31 @@ function decBasketQty(idP){
 //$("#save_button").click(function(e){
 function saveData(){
   
-    alert("SAVE BTN CLICKED");
-    var nomeP = document.getElementById("").value;
-    var categoriaP = document.getElementById("password2").value;
-    var prezzoP = document.getElementById("name").value;
-    //var  = document.getElementById("email").value;
+    
+    var data={
+      nomeP:document.getElementById("nameP1").value,
+      typeP:document.getElementById("typeP1").value,
+      priceP:document.getElementById("priceP1").value,
+      newImage:document.getElementById("newImage1").value,
+      id:'1'
+
+
+    }
+
+
+    alert("SAVE BTN CLICCKED -->"+ data["nomeP"]);
 
 
     $.ajax({
       type: 'POST',
       url:'saveModify.php',
-      contentType: 'json',
-      //dataType: 'text',
-      data: "name="+nome +"&password=" + password1 +"&email=" + email 
-          //name: "nome"
-         
+      contentType: "application/json",
+      data:JSON.stringify(data)//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
       ,
       success: function(response){
         
-        //alert("PHP CODE EXECUTED"+ response);
+        alert("PHP CODE EXECUTED"+ response);
+        //document.getElementById("nameP1").value=response;
         //location.href = "user.php"
       },
       error: function(e) {
@@ -302,6 +322,7 @@ function saveData(){
   
     });
 
+    
    
 
 
