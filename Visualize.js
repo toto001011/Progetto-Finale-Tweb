@@ -133,8 +133,15 @@ $(document).ready(function(){
      // var dataURI = 'data:image/jpeg;base64'+response[i].img;
     
      //document.getElementById('productstable').appendChild(img)
-     $('#productstable').append('<tr id="prodotto"><td>'+'<input id="nameP" type ="text" value="'+response[i].name+'"> </input>'+'</td>'+'<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+'<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+ '<td id="id_td">' +'</td><td>'+'<input type="file" id="newImage"><button type="submit">Salva Modifiche</button>' +'</td></tr>');
-
+    // $('#productstable').append('<tr id="prodotto"><td>'+'<input id="nameP" type ="text" value="'+response[i].name+'"> </input>'+'</td>'+'<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+'<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+ '<td id="id_td">' +'</td><td>'+'<input type="file" id="newImage"><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td></tr>');
+    $('#productstable').append(
+      '<tr id="prodotto">'+
+      '<td>'+'<input id="nameP" type ="text" value="'+response[i].name+' "> </input>'+'</td>'+
+      '<td>'+'<input id="typeP" type ="text" value=" '+response[i].type+'"> </input>'+'</td>'+
+      '<td>'+'<input id="priceP" type ="text" value=" '+response[i].price+'"> </input>'+'</td>'+
+       '<td id="id_td">' +'</td><td>'+
+       '<input type="file" id="newImage"><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
+        '</tr>');
 
      
   
@@ -150,6 +157,10 @@ $(document).ready(function(){
      $('#typeP').attr('id','typeP'+$idP);
      $('#priceP').attr('id','priceP'+$idP);
      $('#newImage').attr('id','newImage'+$idP);
+     $('#save_button').attr('onclick','saveData('+$idP+')');
+     $('#save_button').attr('id','savebtn'+$idP);
+     
+     
      
 
 
@@ -162,8 +173,12 @@ $(document).ready(function(){
         
      //$('#productstable').appendChild(img);
     });
-    $('#productstable').append('<tr><td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button></td></tr>')
-   
+    //$('#newProduct').append('<tr><td><button id="newProduct" name="newPoductbtn" onclick="addNewProducts('+$idP+')" >'+"Aggiungi un nuovo prodotto" +'</button></td></tr>')
+    $('#newProduct').append('<button id="newProduct" name="newPoductbtn" onclick="addNewProducts('+($idP+1)+')" >'+"Aggiungi un nuovo prodotto" +'</button>')
+ /*  var button = document.createElement("button");
+    button.innerHTML = "Premi qui";
+    document.getElementById("newProduct").appendChild(button);
+   */
 },
     error: function(e) {
     //called when there is an error
@@ -284,33 +299,36 @@ function decBasketQty(idP){
 
 //$(document).ready(function() {
 //$("#save_button").click(function(e){
-function saveData(){
+function saveData(idP){
   
     
     var data={
-      nomeP:document.getElementById("nameP1").value,
-      typeP:document.getElementById("typeP1").value,
-      priceP:document.getElementById("priceP1").value,
-      newImage:document.getElementById("newImage1").value,
-      id:'1'
+      nomeP:document.getElementById("nameP"+idP).value,
+      typeP:document.getElementById("typeP"+idP).value,
+      priceP:document.getElementById("priceP"+idP).value,
+      newImage:"",//document.getElementById("newImage"+idP).value,
+      id:idP
 
 
     }
 
 
-    alert("SAVE BTN CLICCKED -->"+ data["nomeP"]);
+    alert("SAVE BTN CLICCKED -->"+ data["nomeP"]+" "+data["typeP"]+" "+data["priceP"]);
 
 
     $.ajax({
       type: 'POST',
       url:'saveModify.php',
       contentType: "application/json",
-      data:JSON.stringify(data)//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
-      ,
+      data:JSON.stringify(data),//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
+      
       success: function(response){
         
-        alert("PHP CODE EXECUTED"+ response);
-        //document.getElementById("nameP1").value=response;
+        alert("PHP CODE EXECUTED",response);
+        location.reload(true);
+
+        //document.getElementById("flash>").innerHTML="Modifiche riuscite";
+        
         //location.href = "user.php"
       },
       error: function(e) {
@@ -324,6 +342,70 @@ function saveData(){
 
     
    
+
+
+}
+
+function addNewProducts(idP){
+  
+  $('#productstable').append(
+    '<tr id="prodotto">'+
+    '<td>'+'<input id="nameP" type ="text" value=" "> </input>'+'</td>'+
+    '<td>'+'<input id="typeP" type ="text" value=" "> </input>'+'</td>'+
+    '<td>'+'<input id="priceP" type ="text" value=" "> </input>'+'</td>'+
+     '<td id="id_td">' +'</td><td>'+
+     '<input type="file" id="newImage"><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
+      '</tr>');
+
+      $('#id_td').attr('id', 'img_id'+idP);
+      $('#prodotto').attr('id','id_tr'+idP);
+      $('#nameP').attr('id','nameP'+idP);
+      $('#typeP').attr('id','typeP'+idP);
+      $('#priceP').attr('id','priceP'+idP);
+      $('#newImage').attr('id','newImage'+idP);
+      $('#save_button').attr('onclick','saveData('+idP+')');
+      $('#save_button').attr('id','savebtn'+idP);
+    
+  var data={
+    nomeP:document.getElementById("nameP"+idP).value,
+    typeP:document.getElementById("typeP"+idP).value,
+    priceP:document.getElementById("priceP"+idP).value,
+    newImage:document.getElementById("newImage"+idP).value,
+    id:idP
+
+
+  }
+
+
+ // alert("SAVE BTN CLICCKED -->"+ data["newImage"]);
+
+
+ /* $.ajax({
+    type: 'POST',
+    url:'saveModify.php',
+    contentType: "application/json",
+    data:{funzione:"addProduct",data:JSON.stringify(data)}//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
+    ,
+    success: function(response){
+      
+      alert("PHP CODE EXECUTED"+ response);
+      //location.reload(true);
+
+      //document.getElementById("flash>").innerHTML="Modifiche riuscite";
+      
+      //location.href = "user.php"
+    },
+    error: function(e) {
+      //called when there is an error
+      alert("PHP CODE ERROR");
+
+      console.log(e.message);
+      }
+
+  });*/
+
+  
+ 
 
 
 }

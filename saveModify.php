@@ -1,4 +1,5 @@
 <?php
+
 include("db.php");
 //if (isset($_REQUEST["nome"]) && isset($_REQUEST["password1"])&& isset($_REQUEST["password2"])) {
  
@@ -7,83 +8,55 @@ include("db.php");
  
     // $_SESSION["email"] = $email;     # start session, remember user info
    
-    
-    $data = json_decode(file_get_contents('php://input'), true);//accedo al file json con "php://input" e lo decodifico con "json_decode" 
-    $nameP=$data["nomeP"];
-    $typeP=$data["typeP"];
-    $priceP=$data["priceP"];
-    $newImage=$data["newImage"];
-    $idP=$data["id"];
-    update_data($idP,$nameP,$typeP,$priceP,$newImage);
-    //$data["newImage"]=$newImage;
+    //function saveData($dataJson){
+        $data = json_decode(file_get_contents('php://input'), true);//accedo al file json con "php://input" e lo decodifico con "json_decode" 
+        $nameP=$data["nomeP"];
+        $typeP=$data["typeP"];
+        $priceP=$data["priceP"];
+       $newImage=" ";//$data["newImage"];
+        $idP=$data["id"];
+        
+       if(check_if_exist_product($idP)){
+            update_product($idP,$nameP,$typeP,$priceP,$newImage);
+        }else{
+            add_product($idP,$nameP,$typeP,$priceP,$newImage);
+           // add_product("2","nameP","typeP","priceP"," ");
+        }
+        $_SESSION["flash"]="Modifiche aggiornate"
+        //echo("nome-->".$nameP)
+ //   }
+
+    /*function addProduct($dataJson){
+        $data = json_decode(file_get_contents('php://input'), true);//accedo al file json con "php://input" e lo decodifico con "json_decode" 
+        $nameP=$data["nomeP"];
+        $typeP=$data["typeP"];
+        $priceP=$data["priceP"];
+        $newImage=$data["newImage"];
+        $idP=$data["id"];
+        add_product($idP,$nameP,$typeP,$priceP,$newImage);
+        $_SESSION["flash"]="Modifiche aggiornate"
 
 
-   
-
-
-    // if(isset($currentPage)) 
-        // redirect($currentPage, "Login successful! Welcome back.");
-        // else 
-   /*    redirect("index.php", "SignIn successful! Welcome.");
-    }else{
-        redirect("newUser.php", "The password doesn't match");
     }
-   }
-   else {
-       redirect("user.php", "Incorrect user name and/or password.");
-   }*/
-       //redirect("user.php", "Login successful! Welcome back.");
-    
-
-    
-    
-    
     
 
 
-/*
-
-
-
-
-
-
-
-
- $password =$_POST["password"]; //$_POST['password'];
-  $email =$_POST["email"]; //$_POST['password'];
- // redirect("signIn.php", "SignIn successful! Welcome nome->  $nome |-------------|  pass->$password");
- 
-    if(strrpos("$email","@")==FALSE  ){
-     
-     //redirect("newUser.php", "Email not correct");
-     
-    }else{
-        //if(check_if_exist($email)<=0){
-       // sign_new_user($nome,$password,$email);
-       
-        //redirect("products.php", "Signin successful! Welcome .");
-       // }else{
-            
-       //     redirect("login.php", "You have already an account, please login.");
-
-       // }
-       //echo("PHP CODE=> $email,$password");
-    }
-    redirect("user.php", "Signin successful! please logIn Welcome .");
-    
-
-
-
-
-
-
-
-
-
-
-
-*/
+    if (isset($_POST['funzione']) && isset($_POST['data'])) {
+        $data = json_decode($_POST['data'], true);
+        switch ($_POST['funzione']) {
+          case 'saveData':
+            primaFunzione($data);
+            break;
+          case 'addProduct':
+            secondaFunzione($data);
+            break;
+          default:
+            echo "Funzione non valida";
+            break;
+        }
+      }*/
+          
+      
 
 
 

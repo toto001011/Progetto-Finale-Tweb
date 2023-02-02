@@ -55,11 +55,43 @@ if (isset($_POST['get_all_products'])) {
 }
 
 #Save data modified by admin
-function update_data($idP,$nameP,$typeP,$priceP,$newImage){
+function update_product($idP,$nameP,$typeP,$priceP,$newImage){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  if(isset($newImage)){
+    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'/*,img=$newImage */ WHERE id=$idP");
+  }else{
+    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'  WHERE id=$idP");
+  }
   
-  $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'  WHERE id='1'");
+}
+
+function  check_if_exist_product($idP){
+
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+   $idP = $db->quote($idP);
+   $query_exist = $db->query("SELECT COUNT(name) FROM products WHERE id=$idP");
+  $exist = $query_exist->fetchColumn();  //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
+  //echo($exist);
+  if($exist>0){
+    return 1;
+  }else{
+    return 0;
+  }
+  //return $exist;
+}
+
+
+function add_product($idP,$nameP,$typeP,$priceP,$newImage){
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  if(isset($newImage)){
+    $rows = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP',' '/*'$newImage'*/  )");
+  }else{
+    $rows = $db->query("INSERT INTO products  values ( $idP, '$nameP','$typeP', '$priceP',' ')");
+  }
+  
 }
 
 #Insert a new User 
@@ -202,6 +234,11 @@ function redirect($url, $flash_message = NULL) {
   header("Location: $url");
   die;
 }
+/*
+function show($flash_message=NULL){
+  $_SESSION["flash"] = $flash_message;
+  die;
+}*/
 
 function showProd(){
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);

@@ -21,7 +21,9 @@ ensure_admin("products.php");
 
   
 </table>
-  
+<div id="newProduct">
+
+</div>
 
 
 <?php include("bottom.php"); ?>
