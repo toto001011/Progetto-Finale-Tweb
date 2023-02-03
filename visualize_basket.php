@@ -19,9 +19,9 @@ include("login.php");
 
       
             while($row = $query_risult->fetch()) {
-              $arrayProd[]=array("name"=>$row["name"],"type"=>$row["type"],"price"=>$row["price"],"img"=>base64_encode($row["img"]),"id"=>$row["Id"],"qty"=>$row["qty"]);
+              $arrayProd[]=array("name"=>$row["name"],"type"=>$row["type"],"price"=>$row["price"],"img"=>$row["img"],"id"=>$row["Id"],"qty"=>$row["qty"]);
             // $arrayProd[]=array('name'=> $row["name"],'type'=> $row["type"],"price"=>$row["price"]);
-              
+
               
 
 

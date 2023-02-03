@@ -28,7 +28,7 @@ $(document).ready(function(){
      // var dataURI = 'data:image/jpeg;base64'+response[i].img;
     
      //document.getElementById('productstable').appendChild(img)
-     $('#productstable').append('<tr><td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+ '<td id="id_td">' +'</td>' + '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>+</tr>');
+     $('#productstable').append('<tr><td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'€'+'</td>'+ '<td id="id_td">' +'</td>' + '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>+</tr>');
 //     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
       $idP=response[i].id;
      $('#id_td').attr('id', 'id'+$idP);
@@ -140,14 +140,14 @@ $(document).ready(function(){
       '<td>'+'<input id="typeP" type ="text" value=" '+response[i].type+'"> </input>'+'</td>'+
       '<td>'+'<input id="priceP" type ="text" value=" '+response[i].price+'"> </input>'+'</td>'+
        '<td id="id_td">' +'</td><td>'+
-       '<input type="file" id="newImage"><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
+       '<td><input type="file" id="newImage"></td>'+
+       '<td><button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button></td>'+
+       '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
         '</tr>');
+        //onclick="uploadImg()"
+   
 
-     
-  
-  
-
-//     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
+  // $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
       $idP=response[i].id;
       
 
@@ -159,8 +159,11 @@ $(document).ready(function(){
      $('#newImage').attr('id','newImage'+$idP);
      $('#save_button').attr('onclick','saveData('+$idP+')');
      $('#save_button').attr('id','savebtn'+$idP);
-     
-     
+     /*$('#upload_img').attr('onclick','uploadImg('+$idP+')');
+     $('#upload_img').attr('id','upload_img'+$idP);
+     */
+     $('#upload_img').attr('onclick','upload('+$idP+')');
+     $('#upload_img').attr('id','upload_img'+$idP);
      
 
 
@@ -297,8 +300,36 @@ function decBasketQty(idP){
 }
 
 
-//$(document).ready(function() {
-//$("#save_button").click(function(e){
+
+function upload(idP) {
+
+    var formData = new FormData();
+    formData.append('file', $('#newImage'+idP)[0].files[0]);
+    formData.append('idP',idP);
+    console.log(formData);
+
+
+
+   $.ajax({
+      url: 'uploadImg.php',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (response) {
+        console.log('Image uploaded successfully!');
+        alert(response);
+      },
+      error: function (error) {
+        console.error(error);
+        alert("ERROR UPLOADING!");
+      }
+    });
+  //})
+};
+
+
+
 function saveData(idP){
   
     
@@ -306,14 +337,14 @@ function saveData(idP){
       nomeP:document.getElementById("nameP"+idP).value,
       typeP:document.getElementById("typeP"+idP).value,
       priceP:document.getElementById("priceP"+idP).value,
-      newImage:"",//document.getElementById("newImage"+idP).value,
+      newImage:document.getElementById("newImage"+idP).value,
       id:idP
 
 
     }
 
 
-    alert("SAVE BTN CLICCKED -->"+ data["nomeP"]+" "+data["typeP"]+" "+data["priceP"]);
+    alert("SAVE BTN CLICCKED -->"+ data["nomeP"]+" "+data["typeP"]+" "+data["priceP"]+data["newImage"]);
 
 
     $.ajax({
@@ -353,9 +384,12 @@ function addNewProducts(idP){
     '<td>'+'<input id="nameP" type ="text" value=" "> </input>'+'</td>'+
     '<td>'+'<input id="typeP" type ="text" value=" "> </input>'+'</td>'+
     '<td>'+'<input id="priceP" type ="text" value=" "> </input>'+'</td>'+
-     '<td id="id_td">' +'</td><td>'+
-     '<input type="file" id="newImage"><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
-      '</tr>');
+    '<td><input type="file" id="newImage"></td>'+
+    '<td><button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button></td>'+
+    '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
+    '</tr>');
+
+      
 
       $('#id_td').attr('id', 'img_id'+idP);
       $('#prodotto').attr('id','id_tr'+idP);
@@ -365,6 +399,8 @@ function addNewProducts(idP){
       $('#newImage').attr('id','newImage'+idP);
       $('#save_button').attr('onclick','saveData('+idP+')');
       $('#save_button').attr('id','savebtn'+idP);
+      $('#upload_img').attr('onclick','upload('+idP+')');
+      $('#upload_img').attr('id','upload_img'+idP);
     
   var data={
     nomeP:document.getElementById("nameP"+idP).value,

@@ -59,7 +59,7 @@ function update_product($idP,$nameP,$typeP,$priceP,$newImage){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   if(isset($newImage)){
-    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'/*,img=$newImage */ WHERE id=$idP");
+    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP',img='$newImage'  WHERE id=$idP");
   }else{
     $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'  WHERE id=$idP");
   }
@@ -86,8 +86,20 @@ function  check_if_exist_product($idP){
 function add_product($idP,$nameP,$typeP,$priceP,$newImage){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+
+
   if(isset($newImage)){
-    $rows = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP',' '/*'$newImage'*/  )");
+    //$rows = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP',' ''$newImage'  )");
+    $query = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP', '$newImage'  )");
+   /* $stmt = $db->prepare($query);
+    $stmt->bindParam(':binary_data', $newImage, PDO::PARAM_LOB);
+    $stmt->execute();
+   
+    /*$query = "UPDATE products  SET img=(?)";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "b", $binary);
+    mysqli_stmt_execute($stmt);*/
+
   }else{
     $rows = $db->query("INSERT INTO products  values ( $idP, '$nameP','$typeP', '$priceP',' ')");
   }
@@ -101,8 +113,7 @@ function sign_new_user($name,$password,$email) {
   $name = $db->quote($name);
   $password = $db->quote($password);
   $email = $db->quote($email);
-   $db->query("INSERT INTO clienti values('',$email,$name,$password)
-                     ");
+   $db->query("INSERT INTO clienti values('',$email,$name,$password,'false')");
 }
 function  check_if_exist($email){
 
