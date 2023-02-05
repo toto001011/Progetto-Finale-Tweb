@@ -28,14 +28,14 @@ $(document).ready(function(){
      // var dataURI = 'data:image/jpeg;base64'+response[i].img;
      $idP=response[i].id;
      //document.getElementById('productstable').appendChild(img)
-     $('#productstable').append('<div id="'+$idP+'" draggable="true" ondragstart="drag(event)"><table>'+
-                    '<tr><td>'+response[i].name+'</td>'+
-                    '<td>'+response[i].type+'</td>'+
-                    '<td>'+response[i].price+'€'+'</td>'+
-                    '<td id="id_td" value="1">  </td>' + 
-                    '<td><button id="add_to_basket" name="addToBasketbtn" onclick="addToBasket('+$idP+')"  >'+"Aggiungi al carrello" +'</button>'+
-                //    '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>'+
-                    '</tr><table></div>');
+     $('#productstable').append(
+                    '<div id="'+$idP+'" class="prodotti" draggable="true" ondragstart="drag(event)">'+
+                      '<div class="prodotto">'+response[i].name+'</div>'+
+                      '<div class="prodotto">'+response[i].type+'</div>'+
+                      '<div class="prodotto">'+response[i].price+'€'+'</div>'+
+                      '<div id="id_td" value="1" class="prodotto">  </div>' + 
+                    '<div class="prodotto"><button id="add_to_basket" name="addToBasketbtn" onclick="addToBasket('+$idP+')"  >'+"Aggiungi al carrello" +'</button></div>' +                 
+                  '</div>');
 //     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
       $idP=response[i].id;
       //$( "#id_td" ).draggable( "destroy" );
@@ -82,7 +82,13 @@ $(document).ready(function(){
   
       //called when successful
       console.log(response_basket);
-      $('#basketProductsTable').append("<th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>")
+      $('#basketProductsTable').append(
+      '<div class="head">'+
+        '<div class="head_prod">Nome prodotto</div>'+
+        '<div class="head_prod">Categoria</div>'+
+        '<div class="head_prod">Prezzo</div>'+
+        '<div class="head_prod">Immagine</div>'+
+     '</div>');
       $('#productsDiv').html(response_basket);
       response=JSON.parse(JSON.stringify(response_basket))
     
@@ -93,7 +99,20 @@ $(document).ready(function(){
       $.each(response_basket, function (i, item) {
 
         $idP=response_basket[i].id;      
-       $('#basketProductsTable').append('<tr><td>'+response_basket[i].name+'</td>'+'<td>'+response_basket[i].type+'</td>'+'<td>'+response_basket[i].price+'€ </td>'+ '<td id="id_td">' +'</td><td>'+'<button id="btnDec" type="button" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+'<button type="button" onclick="incBasketQty()" id="btnInc"> +' +'</button>'+'</td></tr>');
+       //$('#basketProductsTable').append('<tr><td>'+response_basket[i].name+'</td>'+'<td>'+response_basket[i].type+'</td>'+'<td>'+response_basket[i].price+'€ </td>'+ '<td id="id_td">' +'</td><td>'+'<button id="btnDec" type="button" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+'<button type="button" onclick="incBasketQty()" id="btnInc"> +' +'</button>'+'</td></tr>');
+       $('#basketProductsTable').append(
+        '<div id="'+$idP+'" class="prodotti" draggable="true" ondragstart="drag(event)">'+
+          
+          '<div class="prodotto">'+response_basket[i].name+'</div>'+
+          '<div class="prodotto">'+response_basket[i].type+'</div>'+
+          '<div class="prodotto">'+response_basket[i].price+'€'+'</div>'+
+          '<div class="prodotto id="id_td"  "><img src="" id="img"> </div>' + 
+          '<div class="prodotto">'+
+          '<button id="btnDec" type="button" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+
+          '<button type="button" onclick="incBasketQty()" id="btnInc"> +' +'</button>'+
+          '</div>'+
+                        
+        '</div>');
       
        totBasket=totBasket+response_basket[i].price*response_basket[i].qty;  
        
@@ -105,14 +124,17 @@ $(document).ready(function(){
        $('#btnInc').attr('id', 'btnInc'+$idP);
        $('#btnDec').attr('id', 'btnDec'+$idP);
 
+       $('#img').attr('src','data:image/png;base64,' + response_basket[i].img);
+
 
        $('#idP').attr('id', 'idP'+$idP);
        var img=new Image();
+       alert(response_basket[i].img);
        img.src = 'data:image/png;base64,' + response_basket[i].img;
   
        var imageCell = document.getElementById("id"+$idP);
        imageCell.innerHTML = ""; // Clear the cell's contents
-       imageCell.appendChild(img); 
+       imageCell.append(img); 
           
        //$('#productstable').appendChild(img);
       });

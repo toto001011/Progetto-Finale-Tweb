@@ -15,9 +15,14 @@ ensure_logged_in("products.php");
 
 </p>
 
-
+<div class="head">
+    <div class="head_prod">Nome prodotto</div>
+    <div class="head_prod">Categoria</div>
+    <div class="head_prod">Prezzo</div>
+    <div class="head_prod">Immagine</div>
+  </div>
 <div id="productstable">
-  <table><tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th></tr></table>
+  
 
   
 </div>

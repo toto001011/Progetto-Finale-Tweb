@@ -7,13 +7,14 @@ ensure_logged_in("basket.php");
 <?php include("top.php"); ?>
 <h2>Prodotti nel carrello:</h2>
 
-<table id="basketProductsTable">
+<div id="basketProductsTable">
   <a id="empty"> Nessun Prodotto nel Carrello</a>
- <!-- <tr id="label"><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>-->
 
-</table>
+</div>
 <ul id="checkout">
         
+ <!-- <tr id="label"><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>-->
+
        
 </ul>
 

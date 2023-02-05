@@ -33,6 +33,6 @@
     <div id="carrello"  ondragover="allowDrop(event)" ondrop="drop(event)"><a href="basket.php"> CARRELLO </a></div>
     
    
-      <div id="flash"> ù
-         
+      <div id="flash"> 
+
     </div>

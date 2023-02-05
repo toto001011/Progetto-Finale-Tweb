@@ -25,24 +25,48 @@ h1, #navigation, #flash {
   text-align: center;
 }
 
-table th {
+table th,.prodotti_ul,.head {
   border-bottom: 1px solid #aaa;
   text-align: left;
 }
 
-table th, table td {
+table th,.prodotti_ul, .head,table td {
   padding-right: 1em;
 }
-div{
-  overflow: hidden;
+.prodotto,.prodotto_li {
+     overflow: hidden;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 
-  
+}
+.prodotto_li,.head_prod{
+  font-weight:bold;
+}
+.prodotti,.prodotti_ul{
+  overflow: hidden;
+  display:flex;
+  width: 50%;
+}
+.head_prod{
+  overflow: hidden;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.head{
+  overflow: hidden;
+  display:flex;
+  width: 40%;
 }
 
 #flash {
   background-color: #ffffcc;
   border: 1px dotted #ccccaa;
-  margin: 0.5em;
+  margin-left: 11.5em;
+  margin-right: 11.5em;
   padding: 0.5em;
   display:none;
 }
@@ -62,4 +86,5 @@ input:invalid{
 input name :valid{
   background-color: green;
 }
+
 
