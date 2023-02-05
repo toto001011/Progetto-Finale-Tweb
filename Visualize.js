@@ -26,27 +26,35 @@ $(document).ready(function(){
     var trHTML = '';
     $.each(response, function (i, item) {
      // var dataURI = 'data:image/jpeg;base64'+response[i].img;
-    
+     $idP=response[i].id;
      //document.getElementById('productstable').appendChild(img)
-     $('#productstable').append('<tr><div id="draggable" draggable="true" ondragstart="dragStart(event)">'+
-                    '<td>'+response[i].name+'</td>'+
+     $('#productstable').append('<div id="'+$idP+'" draggable="true" ondragstart="drag(event)"><table>'+
+                    '<tr><td>'+response[i].name+'</td>'+
                     '<td>'+response[i].type+'</td>'+
                     '<td>'+response[i].price+'€'+'</td>'+
-                    '<td id="id_td">  </td>' + 
-                    '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>'+
-                    '+</tr></div>');
+                    '<td id="id_td" value="1">  </td>' + 
+                    '<td><button id="add_to_basket" name="addToBasketbtn" onclick="addToBasket('+$idP+')"  >'+"Aggiungi al carrello" +'</button>'+
+                //    '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>'+
+                    '</tr><table></div>');
 //     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
       $idP=response[i].id;
+      //$( "#id_td" ).draggable( "destroy" );
+      //$( "#id_td" )
      $('#id_td').attr('id', 'id'+$idP);
+     
      //?compna=",$compname,"
-     $('#idP' ).prop("href", "addToBasket.php?idP="+$idP);
-     $('#idP').attr('id', 'idP'+$idP);
+    // $('#idP' ).prop("href", "addToBasket.php?idP="+$idP);
+     //$('#idP').attr('id', 'idP'+$idP);
+     $('#add_to_basket').attr('id','add_to_basket'+$idP);
+     $('#add_to_basket').attr('onclick','addToBasket('+$idP+')');
+
      var img=new Image();
      img.src = 'data:image/png;base64,' + response[i].img;
 
      var imageCell = document.getElementById("id"+$idP);
      imageCell.innerHTML = ""; // Clear the cell's contents
      imageCell.appendChild(img); 
+     //document.getElementById("id"+$idP).draggable( "option", "disabled", true );
         
      //$('#productstable').appendChild(img);
     });
@@ -60,6 +68,7 @@ $(document).ready(function(){
  // });
 });
 }
+
 
 if (document.location.href.match("basket.php")){
 $(document).ready(function(){
@@ -205,6 +214,36 @@ $(document).ready(function(){
 
  // });
 });
+}
+
+function addToBasket(idP){
+  var data={
+    idP:idP,
+    function:"addToBasket"
+  }
+
+  $.ajax({
+    type: 'POST',
+    url:'saveModify.php',
+    contentType: "application/json",
+    data:JSON.stringify(data),
+    success: function (response) {
+
+
+      $("#flash").fadeIn(1000);
+      var msg=document.getElementById("flash")
+      msg.innerHTML="Prodotto aggiunto al carrello";
+      $("#flash").fadeOut(4000);
+      console.log('Added To Basket successfully!');
+    
+      
+     // alert(response);
+    },
+    error: function (error) {
+      console.error(error);
+      alert("ERROR UPLOADING!");
+    }
+  });
 }
 
 function check_field(){
@@ -527,8 +566,12 @@ function addNewProducts(idP){
   function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    alert(data);
+    addToBasket(data);
+    //ev.target.appendChild(document.getElementById(data));
+  
   }
+/*-------------------------------*/
 
  // alert("SAVE BTN CLICCKED -->"+ data["newImage"]);
 

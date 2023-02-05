@@ -16,11 +16,11 @@ ensure_logged_in("products.php");
 </p>
 
 
-<table id="productstable">
-  <tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th></tr>
+<div id="productstable">
+  <table><tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th></tr></table>
 
   
-</table>
+</div>
 
 
   

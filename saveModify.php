@@ -44,6 +44,15 @@ include("db.php");
         delete_product($idP);
 
 
+    }else
+    if($data["function"]=="addToBasket"){
+        $email=$_SESSION["email"];
+        $password =$_SESSION["password"];
+        $idP=$data["idP"];
+  // $_SESSION["name"] = $name;     # start session, remember user info
+
+  //incBasketQty($nome,$password,$idP);
+  addToBasket($email,$password,$idP);
     }
 
 

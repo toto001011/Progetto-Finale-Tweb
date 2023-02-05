@@ -12,7 +12,7 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password1"])&& isset($_REQUEST
   
 
   if($password1===$password2){
-    sign_new_user($nome,$password1,$email);
+    sign_new_user($nome,md5($password1),$email);
     // $_SESSION["email"] = $email;     # start session, remember user info
     $_SESSION["email"] = $email;     # start session, remember user info
     // if(isset($currentPage)) 
