@@ -24,12 +24,11 @@
       <li><a href="admin.php">Log In/Out</a></li>
     </ul>
     
-    <?php
-    if (isset($_SESSION["flash"])) {
-      # temporary message across page redirects
-      ?>
-      <div id="flash"> <?= $_SESSION["flash"] ?> </div>
-      <?php
-      unset($_SESSION["flash"]);
-    }
-    ?>
+    
+      
+      <div id="flash" > 
+       
+       </div>
+      
+   
+  

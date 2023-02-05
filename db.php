@@ -87,22 +87,19 @@ function add_product($idP,$nameP,$typeP,$priceP,$newImage){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
 
-
   if(isset($newImage)){
-    //$rows = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP',' ''$newImage'  )");
     $query = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP', '$newImage'  )");
-   /* $stmt = $db->prepare($query);
-    $stmt->bindParam(':binary_data', $newImage, PDO::PARAM_LOB);
-    $stmt->execute();
-   
-    /*$query = "UPDATE products  SET img=(?)";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "b", $binary);
-    mysqli_stmt_execute($stmt);*/
-
   }else{
     $rows = $db->query("INSERT INTO products  values ( $idP, '$nameP','$typeP', '$priceP',' ')");
   }
+  
+}
+function delete_product($idP){
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+
+    $query = $db->query("DELETE FROM products WHERE Id='$idP'");
+  
   
 }
 
@@ -176,6 +173,16 @@ function incBasketQty($email,$password,$idP) {
    /*/$db->query("SELECT * FROM carrello
               WHERE idC in (SELECT id FROM clienti WHERE name=$name)
                     ");*/
+}
+
+function get_last_index(){
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  
+  $lastIndexRaw=$db->query("SELECT MAX(Id) FROM products"); 
+  $lastIndex = $lastIndexRaw->fetchColumn();
+  return $lastIndex+1;
+
 }
 
 #Insert a new User 

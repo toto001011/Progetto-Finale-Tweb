@@ -14,18 +14,23 @@
 
 
   <body>
- 
+  <h1>Salvatore Online Shop</h1>
+ <!--
     <h1>Salvatore Online Shop</h1>
     <ul id="carrello">
         <li> <a href="basket.php"> CARRELLO </a></li>
     </ul>
+-->
 
+    <div class="navigation">
     <ul id="navigation">
       <li><a href="index.php">Main Page</a></li>
       <li><a id="productsBtn"  href="products.php">Products</a></li>
      <!-- <li><a href="teachers.php">Teachers</a></li> -->
       <li><a href="user.php">Log In/Out</a></li>
     </ul>
+</div>
+    <div id="carrello"  ondragover="allowDrop(event)" ondrop="drop(event)"><a href="basket.php"> CARRELLO </a></div>
     
     <?php
     if (isset($_SESSION["flash"])) {

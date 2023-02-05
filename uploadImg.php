@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_FILES['file']) ) {
   $idP=$_POST['idP'];
   $file = $_FILES['file'];
@@ -22,7 +21,9 @@ if (isset($_FILES['file']) ) {
         $fileNameNew ="idP".$idP.".".$fileActualExt;
         $fileDestination = 'upload/'.$fileNameNew;
         move_uploaded_file($fileTmpName, $fileDestination);
-        echo "Image uploaded successfully!";
+        
+        //echo "Image uploaded successfully!";
+        echo($fileDestination);
       } else {
         echo "File size is too big!";
       }

@@ -28,7 +28,13 @@ $(document).ready(function(){
      // var dataURI = 'data:image/jpeg;base64'+response[i].img;
     
      //document.getElementById('productstable').appendChild(img)
-     $('#productstable').append('<tr><td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'€'+'</td>'+ '<td id="id_td">' +'</td>' + '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>+</tr>');
+     $('#productstable').append('<tr><div id="draggable" draggable="true" ondragstart="dragStart(event)">'+
+                    '<td>'+response[i].name+'</td>'+
+                    '<td>'+response[i].type+'</td>'+
+                    '<td>'+response[i].price+'€'+'</td>'+
+                    '<td id="id_td">  </td>' + 
+                    '<td><a href="addToBasket.php" id="idP">'+"Aggiungi al carrello" +'</a></td>'+
+                    '+</tr></div>');
 //     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
       $idP=response[i].id;
      $('#id_td').attr('id', 'id'+$idP);
@@ -114,7 +120,10 @@ $(document).ready(function(){
 }
 
 if (document.location.href.match("productsAdmin.php")){
+ 
 $(document).ready(function(){
+
+  
 //  $("#productsBtn").on('click',function(){
   $.ajax({
     url: 'visualize_products.php',
@@ -143,27 +152,32 @@ $(document).ready(function(){
        '<td><input type="file" id="newImage"></td>'+
        '<td><button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button></td>'+
        '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
+       '<td><button id="delete_button" name="deletebtn" onclick="deleteProduct()" >'+"Elimina il Prodotto" +'</button>' +'</td>'+
+       
         '</tr>');
         //onclick="uploadImg()"
    
 
   // $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
-      $idP=response[i].id;
-      
+   $idP= response[i].id;
+      idP=response[i].id;
 
      $('#id_td').attr('id', 'img_id'+$idP);
-     $('#prodotto').attr('id','id_tr'+$idP);
+     $('#prodotto').attr('id','prodotto'+$idP);
      $('#nameP').attr('id','nameP'+$idP);
      $('#typeP').attr('id','typeP'+$idP);
      $('#priceP').attr('id','priceP'+$idP);
      $('#newImage').attr('id','newImage'+$idP);
      $('#save_button').attr('onclick','saveData('+$idP+')');
-     $('#save_button').attr('id','savebtn'+$idP);
+     $('#save_button').attr('id','save_button'+$idP);
      /*$('#upload_img').attr('onclick','uploadImg('+$idP+')');
      $('#upload_img').attr('id','upload_img'+$idP);
      */
      $('#upload_img').attr('onclick','upload('+$idP+')');
      $('#upload_img').attr('id','upload_img'+$idP);
+
+     $('#delete_button').attr('onclick','deleteProduct('+$idP+')');
+     $('#delete_button').attr('id','delete_button'+$idP);
      
 
 
@@ -176,18 +190,19 @@ $(document).ready(function(){
         
      //$('#productstable').appendChild(img);
     });
-    //$('#newProduct').append('<tr><td><button id="newProduct" name="newPoductbtn" onclick="addNewProducts('+$idP+')" >'+"Aggiungi un nuovo prodotto" +'</button></td></tr>')
     $('#newProduct').append('<button id="newProduct" name="newPoductbtn" onclick="addNewProducts('+($idP+1)+')" >'+"Aggiungi un nuovo prodotto" +'</button>')
- /*  var button = document.createElement("button");
-    button.innerHTML = "Premi qui";
-    document.getElementById("newProduct").appendChild(button);
-   */
+
+   
+
 },
     error: function(e) {
     //called when there is an error
-    console.log(e.message);
+    $('#newProduct').append('<button id="newProduct" name="newPoductbtn" onclick="addNewProducts('+0+')" >'+"Aggiungi un nuovo prodotto" +'</button>')
+    console.log("nessun prodotto ");
     }
     });
+    
+
  // });
 });
 }
@@ -267,9 +282,6 @@ function incBasketQty(idP){
 }
 
 function decBasketQty(idP){
-
-  
-
   
    $.ajax({
       type: 'POST',
@@ -306,6 +318,8 @@ function upload(idP) {
     var formData = new FormData();
     formData.append('file', $('#newImage'+idP)[0].files[0]);
     formData.append('idP',idP);
+    formData.append('function',"upload");
+
     console.log(formData);
 
 
@@ -317,8 +331,18 @@ function upload(idP) {
       contentType: false,
       processData: false,
       success: function (response) {
+        $("#flash").fadeIn(1000);
+        var msg=document.getElementById("flash")
+        msg.innerHTML="Immagine caricata correttamente";
+        $("#flash").fadeOut(4000);
         console.log('Image uploaded successfully!');
-        alert(response);
+        var img=new Image();
+          img.src = response;
+        
+        var imageCell = document.getElementById("img_id"+idP);
+        imageCell.innerHTML = " "; // Clear the cell's contents
+       imageCell.appendChild(img); 
+       // alert(response);
       },
       error: function (error) {
         console.error(error);
@@ -326,92 +350,185 @@ function upload(idP) {
       }
     });
   //})
-};
+}
 
 
 
 function saveData(idP){
   
     
-    var data={
-      nomeP:document.getElementById("nameP"+idP).value,
-      typeP:document.getElementById("typeP"+idP).value,
-      priceP:document.getElementById("priceP"+idP).value,
-      newImage:document.getElementById("newImage"+idP).value,
-      id:idP
+  var data={
+    nomeP:document.getElementById("nameP"+idP).value,
+    typeP:document.getElementById("typeP"+idP).value,
+    priceP:document.getElementById("priceP"+idP).value,
+    newImage:document.getElementById("newImage"+idP).value,
+    id:idP,
+    function:"saveData",
 
 
-    }
+
+  }
 
 
-    alert("SAVE BTN CLICCKED -->"+ data["nomeP"]+" "+data["typeP"]+" "+data["priceP"]+data["newImage"]);
+  //alert("SAVE BTN CLICCKED -->"+ data["nomeP"]+" "+data["typeP"]+" "+data["priceP"]+data["newImage"]);
 
 
-    $.ajax({
-      type: 'POST',
-      url:'saveModify.php',
-      contentType: "application/json",
-      data:JSON.stringify(data),//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
-      
-      success: function(response){
-        
-        alert("PHP CODE EXECUTED",response);
-        location.reload(true);
-
-        //document.getElementById("flash>").innerHTML="Modifiche riuscite";
-        
-        //location.href = "user.php"
-      },
-      error: function(e) {
-        //called when there is an error
-        alert("PHP CODE ERROR");
-
-        console.log(e.message);
-        }
-  
-    });
-
+  $.ajax({
+    type: 'POST',
+    url:'saveModify.php',
+    contentType: "application/json",
+    data:JSON.stringify(data),//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
     
-   
+    success: function(response){
+      
+      //alert("PHP CODE EXECUTED",response);
+      $("#flash").fadeIn(1000);
+      var msg=document.getElementById("flash")
+      msg.innerHTML="Prodotto modificato correttamente";
+      $("#flash").fadeOut(4000);
+      
 
+      //location.reload(true);
+
+      //document.getElementById("flash>").innerHTML="Modifiche riuscite";
+      
+      //location.href = "user.php"
+    },
+    error: function(e) {
+      //called when there is an error
+      alert("PHP CODE ERROR");
+
+      console.log(e.message);
+      }
+
+  });
+
+  
+ 
+
+
+}
+function deleteProduct(idP){
+  var data={idP:idP,
+            function:"delete"
+          }
+//          alert("delete BTN CLICCKED -->"+ data["idP"]+" "+data["function"]);
+
+  $.ajax({
+    type: 'POST',
+    url:'saveModify.php',
+    contentType: "application/json",
+    data:JSON.stringify(data),
+    success: function(response){
+        
+      //alert("PHP CODE EXECUTED",response);
+      var prodotto = document.getElementById("prodotto"+idP);
+      prodotto.innerHTML = ""; // Clear the cell's contents
+      
+      $("#flash").fadeIn(1000);
+      var msg=document.getElementById("flash")
+      msg.innerHTML="Prodotto modificato correttamente";
+      $("#flash").fadeOut(4000);
+      //location.reload(true);
+
+      //document.getElementById("flash>").innerHTML="Modifiche riuscite";
+      
+      //location.href = "user.php"
+    },
+    error: function(e) {
+      //called when there is an error
+      alert("PHP CODE ERROR");
+
+      console.log(e.message);
+      }
+
+  
+  })
 
 }
 
 function addNewProducts(idP){
-  
-  $('#productstable').append(
-    '<tr id="prodotto">'+
-    '<td>'+'<input id="nameP" type ="text" value=" "> </input>'+'</td>'+
-    '<td>'+'<input id="typeP" type ="text" value=" "> </input>'+'</td>'+
-    '<td>'+'<input id="priceP" type ="text" value=" "> </input>'+'</td>'+
-    '<td><input type="file" id="newImage"></td>'+
-    '<td><button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button></td>'+
-    '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
-    '</tr>');
 
-      
-
-      $('#id_td').attr('id', 'img_id'+idP);
-      $('#prodotto').attr('id','id_tr'+idP);
-      $('#nameP').attr('id','nameP'+idP);
-      $('#typeP').attr('id','typeP'+idP);
-      $('#priceP').attr('id','priceP'+idP);
-      $('#newImage').attr('id','newImage'+idP);
-      $('#save_button').attr('onclick','saveData('+idP+')');
-      $('#save_button').attr('id','savebtn'+idP);
-      $('#upload_img').attr('onclick','upload('+idP+')');
-      $('#upload_img').attr('id','upload_img'+idP);
-    
   var data={
+      idP:idP,
+      function:"addNewProducts",
+  }
+  $.ajax({
+    type: 'POST',
+    url:'saveModify.php',
+    contentType: "application/json",
+    data:JSON.stringify(data),
+    success: function(response){
+      $idP=response;
+      $('#productstable').append(
+        '<tr id="prodotto">'+
+        '<td>'+'<input id="nameP" type ="text" value="nome"> </input>'+'</td>'+
+        '<td>'+'<input id="typeP" type ="text" value="tipo"> </input>'+'</td>'+
+        '<td>'+'<input id="priceP" type ="text" value="prezzo"> </input>'+'</td>'+
+        '<td id="id_td" value="immagine">' +'</td><td>'+
+        '<td><input type="file" id="newImage"></td>'+
+        '<td><button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button></td>'+
+        '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
+        '<td><button id="delete_button" name="deletebtn" onclick="deleteProduct()" >'+"Elimina il Prodotto" +'</button>' +'</td>'+
+        
+         '</tr>');
+         
+      $('#id_td').attr('id', 'img_id'+$idP);
+      $('#prodotto').attr('id','prodotto'+$idP);
+      $('#nameP').attr('id','nameP'+$idP);
+      $('#typeP').attr('id','typeP'+$idP);
+      $('#priceP').attr('id','priceP'+$idP);
+      $('#newImage').attr('id','newImage'+$idP);
+      $('#save_button').attr('onclick','saveData('+$idP+')');
+      $('#save_button').attr('id','savebtn'+$idP);
+      $('#upload_img').attr('onclick','upload('+$idP+')');
+      $('#upload_img').attr('id','upload_img'+$idP);
+    
+  /*var data={
     nomeP:document.getElementById("nameP"+idP).value,
     typeP:document.getElementById("typeP"+idP).value,
     priceP:document.getElementById("priceP"+idP).value,
     newImage:document.getElementById("newImage"+idP).value,
     id:idP
 
+    
+        
+      
+    }*/
+  },
+    error: function(e) {
+      //called when there is an error
+      alert("PHP CODE ERROR");
+
+      console.log(e.message);
+      }
+
+  
+  })
+
+
+  
+ 
+      
+
 
   }
 
+  /*funzioni per gestire il drag&drop*/
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+  
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+  
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+  }
 
  // alert("SAVE BTN CLICCKED -->"+ data["newImage"]);
 
@@ -441,10 +558,10 @@ function addNewProducts(idP){
   });*/
 
   
- 
 
 
-}
+
+
 
 /*
 function addToDb(){
