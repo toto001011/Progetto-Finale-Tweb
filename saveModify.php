@@ -53,6 +53,13 @@ include("db.php");
 
   //incBasketQty($nome,$password,$idP);
   addToBasket($email,$password,$idP);
+    }if($data["function"]=="delBasketProduct"){
+        $email=$_SESSION["email"];
+        $password =$_SESSION["password"];
+        $idP=$data["idP"];
+
+        delete_basket_product($email,$password,$idP);
+
     }
 
 

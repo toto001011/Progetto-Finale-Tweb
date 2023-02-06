@@ -207,6 +207,32 @@ function decBasketQty($email,$password,$idP) {
 
  }
 }
+function delete_basket_product($email,$password,$idP){
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  $email = $db->quote($email);
+  $password = $db->quote($password);
+  $query_idC="SELECT FROM clienti WHERE email=:email";
+  
+  $statement = $pdo->prepare($query_idC);
+  $statement->execute(array(
+    ':email' => $email
+  ));
+  $idC = $query_idC->fetchColumn();
+
+
+
+ $query_del="DELETE FROM carrello WHERE idC=:idC AND idP=:idP ";
+ $statement = $pdo->prepare($query_del);
+ $statement->execute(array(
+   ':idC' => $idP,
+   ':idP'=>$idP
+ ));
+ //$idC = $query_idC->fetchColumn();
+
+
+
+}
 
 
 # Redirects current page to login.php if user is not logged in.

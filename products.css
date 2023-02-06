@@ -70,7 +70,9 @@ table th,.prodotti_ul, .head,table td {
   padding: 0.5em;
   display:none;
 }
-
+button{
+  margin: 4px;
+}
 h1, h2 {
   margin: 0.5em;
 }
