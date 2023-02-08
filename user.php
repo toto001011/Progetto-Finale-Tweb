@@ -14,7 +14,7 @@
     <dl>
       <dt>Email</dt>     <dd><input type="text" name="email" ></dd>
       <dt>Password</dt> <dd><input type="password" name="password" ></dd>
-      <dt> </dt>        <dd><input type="submit" value="Log in" ></dd>
+      <dt> </dt>        <dd><button type="submit"  >Log in</button></dd>
     </dl>
   </form>
   <a href="newUser.php"> Non ancora registrato?</a>

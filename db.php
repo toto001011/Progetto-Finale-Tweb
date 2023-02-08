@@ -154,11 +154,22 @@ function addToBasket($email,$password,$idP) {
 }
 
 #Insert a new User 
-function incBasketQty($email,$password,$idP) {
+
+function get_last_index(){
+  global $dbconnstring, $dbuser, $dbpasswd;
+  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
+  
+  $lastIndexRaw=$db->query("SELECT MAX(Id) FROM products"); 
+  $lastIndex = $lastIndexRaw->fetchColumn();
+  return $lastIndex+1;
+
+}
+
+function incBasketQty($email,$idP) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $email = $db->quote($email);
-  $password = $db->quote($password);
+  
   
   $query_idC=$db->query("SELECT id FROM clienti WHERE email=$email");
   //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
@@ -175,22 +186,11 @@ function incBasketQty($email,$password,$idP) {
                     ");*/
 }
 
-function get_last_index(){
-  global $dbconnstring, $dbuser, $dbpasswd;
-  $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  
-  $lastIndexRaw=$db->query("SELECT MAX(Id) FROM products"); 
-  $lastIndex = $lastIndexRaw->fetchColumn();
-  return $lastIndex+1;
 
-}
-
-#Insert a new User 
-function decBasketQty($email,$password,$idP) {
+function decBasketQty($email,$idP) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   $email = $db->quote($email);
-  $password = $db->quote($password);
   
   $query_idC=$db->query("SELECT id FROM clienti WHERE email=$email");
   //$idC = $query_idC->fetch(PDO::FETCH_ASSOC);
@@ -207,32 +207,29 @@ function decBasketQty($email,$password,$idP) {
 
  }
 }
-function delete_basket_product($email,$password,$idP){
+function delete_basket_product($email, $idP) {
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  $email = $db->quote($email);
-  $password = $db->quote($password);
-  $query_idC="SELECT FROM clienti WHERE email=:email";
   
-  $statement = $pdo->prepare($query_idC);
+  $query_idC = "SELECT id FROM clienti WHERE email=:email";
+  $statement = $db->prepare($query_idC);
   $statement->execute(array(
     ':email' => $email
   ));
-  $idC = $query_idC->fetchColumn();
+  $idC = $statement->fetchColumn();
+  
+  $query_del = "DELETE FROM carrello WHERE idC=:idC AND idP=:idP";
+  $statement = $db->prepare($query_del);
+  $statement->execute(array(
+    ':idC' => $idC,
+    ':idP' => $idP
+  ));
+}
 
-
-
- $query_del="DELETE FROM carrello WHERE idC=:idC AND idP=:idP ";
- $statement = $pdo->prepare($query_del);
- $statement->execute(array(
-   ':idC' => $idP,
-   ':idP'=>$idP
- ));
  //$idC = $query_idC->fetchColumn();
 
 
 
-}
 
 
 # Redirects current page to login.php if user is not logged in.
@@ -271,9 +268,11 @@ function push_addedToBasket($name) {
 
 # Redirects current page to the given URL and optionally sets flash message.
 function redirect($url, $flash_message = NULL) {
+  //session_start();
   if ($flash_message) {
     $_SESSION["flash"] = $flash_message;
   }
+ // session_close();
   # session_write_close();
   header("Location: $url");
   die;

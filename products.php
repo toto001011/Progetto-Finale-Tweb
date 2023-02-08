@@ -21,11 +21,7 @@ ensure_logged_in("products.php");
     <div class="head_prod">Prezzo</div>
     <div class="head_prod">Immagine</div>
   </div>
-<div id="productstable">
-  
-
-  
-</div>
+<div id="productstable"></div>
 
 
   

@@ -9,6 +9,8 @@ $(document).ready(function(){
     success: function(response) {
 
     //called when successful
+    $('#carrello').css('display', 'inline');
+
     console.log(response);
     $('#productsDiv').html(response);
     response=JSON.parse(JSON.stringify(response))
@@ -85,7 +87,7 @@ $(document).ready(function(){
   
       //called when successful
       console.log(response_basket);
-      $('#basketProductsTable').append(
+      $('#header').append(
       '<div class="head">'+
         '<div class="head_prod">Nome prodotto</div>'+
         '<div class="head_prod">Categoria</div>'+
@@ -106,22 +108,24 @@ $(document).ready(function(){
        //$('#basketProductsTable').append('<tr><td>'+response_basket[i].name+'</td>'+'<td>'+response_basket[i].type+'</td>'+'<td>'+response_basket[i].price+'€ </td>'+ '<td id="id_td">' +'</td><td>'+'<button id="btnDec" type="button" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+'<button type="button" onclick="incBasketQty()" id="btnInc"> +' +'</button>'+'</td></tr>');
        $('#basketProductsTable').append(
         '<div id="'+$idP+'" class="prodotti" draggable="false" ondragstart="drag(event)">'+
-          
           '<div class="prodotto">'+response_basket[i].name+'</div>'+
           '<div class="prodotto">'+response_basket[i].type+'</div>'+
-          '<div class="prodotto">'+response_basket[i].price+'€'+'</div>'+
+          '<div class="prodotto" ><a id="price">'+response_basket[i].price+'</a>€</div>'+
           '<div class="prodotto" id="id_td"  "> </div>' + 
           '<div class="prodotto">'+
-          '<button type="button" id="btnDec" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+
-          '<button type="button" id="btnInc"  onclick="incBasketQty()" "> +' +'</button>'+
-          '<button type="button" id="btnDel" onclick="delBasketP()" >  X ' +'</button>'+
-
+          '<button type="button" id="btnDec" title="decrementa la quantità" onclick="decBasketQty()"> -' +'</button>'+ 
+          '<a id="qty">'+response_basket[i].qty+'</a>'+
+          '<button type="button" id="btnInc"  title="incrementa la quantità" onclick="incBasketQty()" "> +' +'</button>'+
+          '<button type="button" id="btnDel" title="elimina il prodotto" onclick="delBasketP()" >  X ' +'</button>'+
           '</div>'+
-                        
         '</div>');
       
        totBasket=totBasket+response_basket[i].price*response_basket[i].qty;  
+
+       $('#qty').attr('id', 'qty'+$idP);
+       $('#price').attr('id', 'price'+$idP);
        
+
        $('#id_td').attr('id', 'img_id'+$idP);
        
        $('#btnInc' ).attr("onclick", "incBasketQty("+$idP+")");
@@ -130,7 +134,7 @@ $(document).ready(function(){
 
        $('#btnInc').attr('id', 'btnInc'+$idP);
        $('#btnDec').attr('id', 'btnDec'+$idP);
-        
+       $('#btnDel').attr('id', 'btnDel'+$idP);
        
       // $('#img').attr('src','data:image/png;base64,' + response_basket[i].img);
        
@@ -147,7 +151,7 @@ $(document).ready(function(){
           
        //$('#productstable').appendChild(img);
       });
-      $('#checkout').append('<li><a><h3>'+ "TOTALE: "+ totBasket+"€"+'</h3></a></li>');
+      $('#total').append('<a><h3>'+ 'TOTALE: </a>'+' <a id="tot">'+totBasket+'</a>€</h3></a></li>');
       
   },
       error: function(e) {
@@ -247,6 +251,8 @@ $(document).ready(function(){
 });
 }
 
+
+
 function addToBasket(idP){
   var data={
     idP:idP,
@@ -324,7 +330,7 @@ function incBasketQty(idP){
   //alert("CLICKED");
 
   
-   $.ajax({
+  /* $.ajax({
       type: 'POST',
       url:'incBasketQty.php',
       //contentType: 'text',
@@ -345,27 +351,101 @@ function incBasketQty(idP){
         console.log(e.message);
         }
   
-    });
+    });*/
+    var data={
+      idP:idP,
+      function:"incBasketQty"
+    }
+    
+     $.ajax({
+        type: 'POST',
+        url:'saveModify.php',
+        contentType: "application/json",
+      data:JSON.stringify(data),
+      
+        success: function(response){
+          //location.reload(true);
+          var new_qty=document.getElementById("qty"+idP).innerHTML;
+         
+          new_qty++;
+          document.getElementById("qty"+idP).innerHTML=new_qty;
+          
+  
+          var tot=document.getElementById("tot").innerHTML;
+          var price=document.getElementById("price"+idP).innerHTML;
+          var price_float=parseFloat(price);
+          var tot_float=parseFloat(tot);
+          //alert("PHP CODE EXECUTED"+ tot+" "+price);
+         
+          tot_float=tot_float+price_float;
+         // alert("PHP CODE EXECUTED"+ new_qty);
+        
+          document.getElementById("tot").innerHTML=tot_float;
+  
+         
+  
+         // alert("PHP CODE EXECUTED"+ response);
+  
+        },
+        error: function(e) {
+          //called when there is an error
+          alert("PHP CODE ERROR");
+  
+          console.log(e.message);
+          }
+    
+      });
+   
   
 
   
 }
 
 function decBasketQty(idP){
+
+  var data={
+    idP:idP,
+    function:"decBasketQty"
+  }
   
    $.ajax({
       type: 'POST',
-      url:'Sa.php',
-      //contentType: 'text',
-      //dataType: 'text',
-      data: "idP="+idP  
-          //name: "nome"
-         
-      ,
+      url:'saveModify.php',
+      contentType: "application/json",
+    data:JSON.stringify(data),
+    
       success: function(response){
-        location.reload(true);
+        //location.reload(true);
+        var new_qty=document.getElementById("qty"+idP).innerHTML;
+       
+        new_qty--;
+        document.getElementById("qty"+idP).innerHTML=new_qty;
+        
 
-        //alert("PHP CODE EXECUTED"+ response);
+        var tot=document.getElementById("tot").innerHTML;
+        var price=document.getElementById("price"+idP).innerHTML;
+
+        tot=tot-price;
+      
+        document.getElementById("tot").innerHTML=tot;
+
+        if(new_qty==0){
+          //document.getElementById(idP).innerHTML="";
+          //document.getElementById(idP).remove;
+          $('#'+idP).remove();
+
+        }
+        //alert("CHILDREN -->"+ $('#basketProductsTable').children().length);
+        if ($('#basketProductsTable').children().length === 0) {
+          $('#header').remove();
+          document.getElementById("empty").innerHTML="Nessun prodotto nel carrello";     
+          $('#checkout').css('display','none');
+           }
+          
+
+        
+
+       // alert("PHP CODE EXECUTED"+ response);
 
       },
       error: function(e) {
@@ -383,7 +463,7 @@ function decBasketQty(idP){
 function delBasketP(idP){
   var data={
     idP:idP,
-    function:"delete"
+    function:"delBasketProduct"
   }
   $.ajax({
     type: 'POST',
@@ -393,8 +473,34 @@ function delBasketP(idP){
     data:JSON.stringify(data),
     
     success: function(response){
-      location.reload(true);
+      //location.reload(true);
+      
+      var qty=document.getElementById("qty"+idP).innerHTML;
+       
+        
 
+        var tot=document.getElementById("tot").innerHTML;
+        var price=document.getElementById("price"+idP).innerHTML;
+        var tot_float=parseFloat(tot);
+        var price_float=parseFloat(price);
+        var qty_int=parseInt(qty);
+
+
+
+        tot_float=tot_float-(qty_int*price_float);
+       // alert(tot_float);
+        document.getElementById(idP).remove;
+        $('#'+idP).remove();
+  
+        document.getElementById("tot").innerHTML=tot_float;
+
+        //alert("CHILDREN -->"+ $('#basketProductsTable').children().length);
+        if ($('#basketProductsTable').children().length === 0) {
+          $('#header').remove();
+          document.getElementById("empty").innerHTML="Nessun prodotto nel carrello";     
+          $('#checkout').css('display','none');
+           }
+          
       //alert("PHP CODE EXECUTED"+ response);
 
     },
@@ -623,65 +729,27 @@ function addNewProducts(idP){
   }
   
   function drop(ev) {
+
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    alert(data);
+    //alert(data);
     addToBasket(data);
     //ev.target.appendChild(document.getElementById(data));
   
   }
+
+  function log(){
+    
+        $("#msg").fadeIn(1000);
+       /* var msg=document.getElementById("flash")
+        msg.innerHTML="Utente loggato correttamente";*/
+        $("#msg").fadeOut(4000);
+        $("#msg").css('display','flex');
+       
+
+
+
+  }
 /*-------------------------------*/
 
- // alert("SAVE BTN CLICCKED -->"+ data["newImage"]);
-
-
- /* $.ajax({
-    type: 'POST',
-    url:'saveModify.php',
-    contentType: "application/json",
-    data:{funzione:"addProduct",data:JSON.stringify(data)}//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
-    ,
-    success: function(response){
-      
-      alert("PHP CODE EXECUTED"+ response);
-      //location.reload(true);
-
-      //document.getElementById("flash>").innerHTML="Modifiche riuscite";
-      
-      //location.href = "user.php"
-    },
-    error: function(e) {
-      //called when there is an error
-      alert("PHP CODE ERROR");
-
-      console.log(e.message);
-      }
-
-  });*/
-
-  
-
-
-
-
-
-/*
-function addToDb(){
-  $.ajax({
-    url: 'SignIn.php',
-    type: 'POST',
-    data: {name:document.getElementById("password1").value,password:document.getElementById("password1").value},
-   
-    success: function(response) {
-
-    //called when successful
-    alert("DATA PASSED TO PHP");
-    },
-    error: function(e) {
-    //called when there is an error
-    console.log(e.message);
-    }
-    });
-}
-*/
 

@@ -15,10 +15,12 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password"])) {
        // redirect($currentPage, "Login successful! Welcome back.");
       // else 
         redirect("index.php", "Login successful! Welcome back.");
-        session_destroy();
+       //echo("Login successful! Welcome back.");
+       session_destroy();
     }
     else {
         redirect("user.php", "Incorrect user name and/or password.");
+        session_destroy();
     }
 }
 

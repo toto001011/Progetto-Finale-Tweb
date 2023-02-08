@@ -29,6 +29,15 @@
       <div id="flash" > 
        
        </div>
+       <?php
+    if (isset($_SESSION["flash"])) {
+      # temporary message across page redirects
+      ?>
+      <div id="msg"> <?= $_SESSION["flash"] ?> </div>
+      <?php
+      unset($_SESSION["flash"]);
+    }
+    ?>
       
    
   

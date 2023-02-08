@@ -55,11 +55,30 @@ include("db.php");
   addToBasket($email,$password,$idP);
     }if($data["function"]=="delBasketProduct"){
         $email=$_SESSION["email"];
-        $password =$_SESSION["password"];
         $idP=$data["idP"];
 
-        delete_basket_product($email,$password,$idP);
+        delete_basket_product($email,$idP);
 
+    } else if($data["function"]=="decBasketQty"){
+
+       // if (isset($_SESSION)){
+
+
+
+            $email=$_SESSION["email"];
+              //$password =$_SESSION["password"]; //$_POST['password'];
+            $idP=$data["idP"];
+              // $_SESSION["name"] = $name;     # start session, remember user info
+            
+              decBasketQty($email,$idP);
+               //redirect("basket.php", "v");
+       // }
+    }else if($data["function"]=="incBasketQty"){
+        
+        $email=$_SESSION["email"];
+        $idP=$data["idP"];
+
+        incBasketQty($email,$idP);
     }
 
 
