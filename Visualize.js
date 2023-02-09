@@ -202,17 +202,31 @@ $(document).ready(function(){
     $('#productstable').append(
       '<tr id="prodotto">'+
       '<td>'+'<input id="nameP" type ="text" value="'+response[i].name+' "> </input>'+'</td>'+
-      '<td>'+'<input id="typeP" type ="text" value=" '+response[i].type+'"> </input>'+'</td>'+
-      '<td>'+'<input id="priceP" type ="text" value=" '+response[i].price+'"> </input>'+'</td>'+
+      '<td><select  name="type" id="typeP"  value="'+response[i].type+'">'+
+      '<option id="op2"value="Telefonia" >Telefonia</option>'+
+      '<option id="op1" value="Elettronica" >Elettronica</option>'+
+      '<option id="op3" value="Informatica">Informatica</option>'+
+      '<option id="op4" value="Altro">Altro</option>'+
+    '</select>'+ 
+      
+             
+        
+      '<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+
        '<td id="id_td">' +'</td><td>'+
-       '<td><input type="file" id="newImage"></td>'+
-       '<td><button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button></td>'+
+       '<td>'+
+        '<input type="file" id="newImage"><br>'+
+        '<button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button>'+
+       '</td>'+
        '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
        '<td><button id="delete_button" name="deletebtn" onclick="deleteProduct()" >'+"Elimina il Prodotto" +'</button>' +'</td>'+
        
         '</tr>');
         //onclick="uploadImg()"
-        
+        /*' 
+              '<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+
+
+        */
+        //
 
   // $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
    $idP= response[i].id;
@@ -234,7 +248,19 @@ $(document).ready(function(){
 
      $('#delete_button').attr('onclick','deleteProduct('+$idP+')');
      $('#delete_button').attr('id','delete_button'+$idP);
-     
+     switch(response[i].type){
+        case "Elettronica":$('#typeP'+$idP).val('Elettronica');
+        break;
+        case "Telefonia":$('#typeP'+$idP).val('Telefonia');
+        break;
+        case "Informatica":$('#typeP'+$idP).val('Informatica');
+        break;
+        case "Altro":$('#typeP'+$idP).val('Altro');
+        break;
+        
+        
+
+     }
 
 
      var img=new Image();
@@ -559,6 +585,7 @@ function saveData(idP){
   var data={
     nomeP:document.getElementById("nameP"+idP).value,
     typeP:document.getElementById("typeP"+idP).value,
+    //typeP:$("typeP"+idP).val(),
     priceP:document.getElementById("priceP"+idP).value,
     newImage:document.getElementById("newImage"+idP).value,
     id:idP,
@@ -567,8 +594,9 @@ function saveData(idP){
 
 
   }
-
-
+ /* var test=document.getElementById("typeP"+idP).value;
+  alert(test);
+*/
 
 
   $.ajax({
@@ -663,11 +691,19 @@ function addNewProducts(idP){
       $('#productstable').append(
         '<tr id="prodotto">'+
         '<td>'+'<input id="nameP" type ="text" value="nome"> </input>'+'</td>'+
-        '<td>'+'<input id="typeP" type ="text" value="tipo"> </input>'+'</td>'+
+        '<td><select  name="type" id="typeP" ">'+
+      '<option id="op2"value="Telefonia" >Telefonia</option>'+
+      '<option id="op1" value="Elettronica" >Elettronica</option>'+
+      '<option id="op3" value="Informatica">Informatica</option>'+
+      '<option id="op4" value="Altro">Altro</option>'+
+    '</select>'+
+        
         '<td>'+'<input id="priceP" type ="text" value="prezzo"> </input>'+'</td>'+
         '<td id="id_td" value="immagine">' +'</td><td>'+
-        '<td><input type="file" id="newImage"></td>'+
-        '<td><button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button></td>'+
+        '<td>'+
+          '<input type="file" id="newImage"><br>'+
+          '<button id="upload_img" name="uploadbtn" onclick="upload()"  >'+"Carica Immagine" +'</button>'+
+       '</td>'+
         '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
         '<td><button id="delete_button" name="deletebtn" onclick="deleteProduct()" >'+"Elimina il Prodotto" +'</button>' +'</td>'+
         
