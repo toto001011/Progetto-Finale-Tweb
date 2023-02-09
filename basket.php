@@ -16,14 +16,16 @@ ensure_logged_in("basket.php");
 <div id="checkout">
         
  <!-- <tr id="label"><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>-->
-<div id="total"></div>
-       
+    <div id="total"></div>
+        
 
 
-<div id="pay">
+        <div id="pay">
 
-         <a href="basket.php"> Acquista </a>
+                <a href="basket.php"> Acquista </a>
+        </div>
+        
 </div>
-</div>
+
 
 <?php include("bottom.php"); ?>

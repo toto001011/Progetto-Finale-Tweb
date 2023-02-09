@@ -3,6 +3,8 @@
 <?php if (isset($_SESSION["email"])) { ?>
   <h2>User Status</h2>
   <p>You are logged in as <?= $_SESSION["email"] ?>.</p>
+
+  
   
   <form id="logout" action="logout.php" method="post">
     <input type="submit" value="Log out" >
@@ -17,7 +19,9 @@
       <dt> </dt>        <dd><button type="submit"  >Log in</button></dd>
     </dl>
   </form>
-  <a href="newUser.php"> Non ancora registrato?</a>
-<?php } ?>
+  <a href="newUser.php"> Non ancora registrato?</a><br>
+  <a href="admin.php"> Sei il proprietario?</a>
+<?php } 
+  ?>
 
 <?php include("bottom.php"); ?>

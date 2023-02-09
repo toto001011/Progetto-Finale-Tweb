@@ -1,29 +1,24 @@
 if (document.location.href.match("products.php")){
 $(document).ready(function(){
 //  $("#productsBtn").on('click',function(){
+  var data={
+    function:"visualize_products"
+  }
   $.ajax({
-    url: 'visualize_products.php',
+    url: 'saveModify.php',
     type: 'POST',
-    data: {},
+    data: JSON.stringify(data),
+    contentType: "application/json",
     dataType: 'json',
     success: function(response) {
 
     //called when successful
     $('#carrello').css('display', 'inline');
-
+   
     console.log(response);
     $('#productsDiv').html(response);
     response=JSON.parse(JSON.stringify(response))
    
-   // response = $.parseJSON(response);
-
-          // Decode the base64-encoded image
-   // var imageData = atob(response[1].img);
-    
-
-    // Set the src attribute of the image object to the decoded data URI
-   
-   //var img = document.createElement('img');
   
     var trHTML = '';
     $.each(response, function (i, item) {
@@ -76,17 +71,24 @@ $(document).ready(function(){
 
 
 if (document.location.href.match("basket.php")){
+ 
 $(document).ready(function(){
+  $('#footer').css('margin-top','33%');
   //  $("#productsBtn").on('click',function(){
+    var data={
+      function:"visualize_basket"
+    }
     $.ajax({
-      url: 'visualize_basket.php',
+      url: 'saveModify.php',
       type: 'POST',
-      data: {},
+      data: JSON.stringify(data),
+      contentType: "application/json",
       dataType: 'json',
       success: function(response_basket) {
   
       //called when successful
       console.log(response_basket);
+
       $('#header').append(
       '<div class="head">'+
         '<div class="head_prod">Nome prodotto</div>'+
@@ -102,6 +104,7 @@ $(document).ready(function(){
       var totBasket=0;
       //$('#empty').innerHTML=" ";
       document.getElementById("empty").innerHTML=" ";
+      $('#checkout').css('display','block');
       $.each(response_basket, function (i, item) {
 
         $idP=response_basket[i].id;      
@@ -137,7 +140,7 @@ $(document).ready(function(){
        $('#btnDel').attr('id', 'btnDel'+$idP);
        
       // $('#img').attr('src','data:image/png;base64,' + response_basket[i].img);
-       
+  
 
 
        $('#idP').attr('id', 'idProdotto'+$idP);
@@ -152,6 +155,12 @@ $(document).ready(function(){
        //$('#productstable').appendChild(img);
       });
       $('#total').append('<a><h3>'+ 'TOTALE: </a>'+' <a id="tot">'+totBasket+'</a>€</h3></a></li>');
+      $('#footer').css('margin-top','1%');
+      
+    /*  if ($('#basketProductsTable').children().length ==0) {
+       
+        $('#footer').css('margin-top','18%');
+      }*/
       
   },
       error: function(e) {
@@ -168,11 +177,14 @@ if (document.location.href.match("productsAdmin.php")){
 $(document).ready(function(){
 
   
-//  $("#productsBtn").on('click',function(){
+  var data={
+    function:"visualize_products"
+  }
   $.ajax({
-    url: 'visualize_products.php',
+    url: 'saveModify.php',
     type: 'POST',
-    data: {},
+    data: JSON.stringify(data),
+    contentType: "application/json",
     dataType: 'json',
     success: function(response) {
 
@@ -200,7 +212,7 @@ $(document).ready(function(){
        
         '</tr>');
         //onclick="uploadImg()"
-   
+        
 
   // $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
    $idP= response[i].id;
@@ -235,7 +247,7 @@ $(document).ready(function(){
      //$('#productstable').appendChild(img);
     });
     $('#newProduct').append('<button id="newProduct" name="newPoductbtn" onclick="addNewProducts('+($idP+1)+')" >'+"Aggiungi un nuovo prodotto" +'</button>')
-
+    
    
 
 },
@@ -272,6 +284,7 @@ function addToBasket(idP){
       msg.innerHTML="Prodotto aggiunto al carrello";
       $("#flash").fadeOut(4000);
       console.log('Added To Basket successfully!');
+      
     
       
      // alert(response);
@@ -326,32 +339,7 @@ function check_field(){
 
 function incBasketQty(idP){
 
-  
-  //alert("CLICKED");
 
-  
-  /* $.ajax({
-      type: 'POST',
-      url:'incBasketQty.php',
-      //contentType: 'text',
-      //dataType: 'text',
-      data: "idP="+idP  
-          //name: "nome"
-         
-      ,
-      success: function(response){
-        location.reload(true);
-        //salert("PHP CODE EXECUTED"+ response);
-
-      },
-      error: function(e) {
-        //called when there is an error
-        alert("PHP CODE ERROR");
-
-        console.log(e.message);
-        }
-  
-    });*/
     var data={
       idP:idP,
       function:"incBasketQty"
@@ -364,7 +352,6 @@ function incBasketQty(idP){
       data:JSON.stringify(data),
       
         success: function(response){
-          //location.reload(true);
           var new_qty=document.getElementById("qty"+idP).innerHTML;
          
           new_qty++;
@@ -438,11 +425,12 @@ function decBasketQty(idP){
         //alert("CHILDREN -->"+ $('#basketProductsTable').children().length);
         if ($('#basketProductsTable').children().length === 0) {
           $('#header').remove();
-          document.getElementById("empty").innerHTML="Nessun prodotto nel carrello";     
           $('#checkout').css('display','none');
-           }
-          
+          document.getElementById("empty").innerHTML="Nessun prodotto nel carrello";
+          $('#footer').css('margin-top','33%');
+        }
 
+        
         
 
        // alert("PHP CODE EXECUTED"+ response);
@@ -471,10 +459,12 @@ function delBasketP(idP){
   
     contentType: "application/json",
     data:JSON.stringify(data),
+
     
     success: function(response){
       //location.reload(true);
       
+
       var qty=document.getElementById("qty"+idP).innerHTML;
        
         
@@ -497,8 +487,9 @@ function delBasketP(idP){
         //alert("CHILDREN -->"+ $('#basketProductsTable').children().length);
         if ($('#basketProductsTable').children().length === 0) {
           $('#header').remove();
-          document.getElementById("empty").innerHTML="Nessun prodotto nel carrello";     
           $('#checkout').css('display','none');
+          document.getElementById("empty").innerHTML="Nessun prodotto nel carrello";  
+          $('#footer').css('margin-top','33%');
            }
           
       //alert("PHP CODE EXECUTED"+ response);
@@ -534,14 +525,18 @@ function upload(idP) {
       data: formData,
       contentType: false,
       processData: false,
+      dataType: 'json',
       success: function (response) {
+        response=JSON.parse(JSON.stringify(response));
         $("#flash").fadeIn(1000);
-        var msg=document.getElementById("flash")
-        msg.innerHTML="Immagine caricata correttamente";
+        var msg=document.getElementById("flash");
+        msg.innerHTML=response[0].msg;
         $("#flash").fadeOut(4000);
-        console.log('Image uploaded successfully!');
+        //console.log('Image uploaded successfully!'+response);
+        //alert(response)
+        //JSON.parse(JSON.stringify(response))
         var img=new Image();
-          img.src = response;
+          img.src = response[0].src;
         
         var imageCell = document.getElementById("img_id"+idP);
         imageCell.innerHTML = " "; // Clear the cell's contents
@@ -550,7 +545,7 @@ function upload(idP) {
       },
       error: function (error) {
         console.error(error);
-        alert("ERROR UPLOADING!");
+        //alert("ERROR UPLOADING!"+error);
       }
     });
   //})
@@ -574,7 +569,6 @@ function saveData(idP){
   }
 
 
-  //alert("SAVE BTN CLICCKED -->"+ data["nomeP"]+" "+data["typeP"]+" "+data["priceP"]+data["newImage"]);
 
 
   $.ajax({
@@ -582,14 +576,16 @@ function saveData(idP){
     url:'saveModify.php',
     contentType: "application/json",
     data:JSON.stringify(data),//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
+   
     
     success: function(response){
-      
       //alert("PHP CODE EXECUTED",response);
       $("#flash").fadeIn(1000);
       var msg=document.getElementById("flash")
       msg.innerHTML="Prodotto modificato correttamente";
       $("#flash").fadeOut(4000);
+
+     
       
 
       //location.reload(true);

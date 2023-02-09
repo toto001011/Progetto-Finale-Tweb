@@ -7,16 +7,13 @@
 }
 
 #checkout{
-  /*margin-block-end: 1em;*/
-  display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
+  margin-block-end: 1em;
+  display: none;
+   
 }
-
+#footer{
+  margin-top :1%;
+}
 #carrello  {
   display: none;
   padding: 0.5em;
@@ -70,7 +67,7 @@ table th,.prodotti_ul, .head,table td {
 .head{
   overflow: hidden;
   display:flex;
-  width: 50%;
+  width: 41%;
 }
 
 #flash,#msg {

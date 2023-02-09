@@ -1,6 +1,4 @@
 <?php
-# The student login form submits to here.
-# Upon login, remembers student login name in a PHP session variable.
 include("db.php");
 
 if (isset($_REQUEST["email"]) && isset($_REQUEST["password"])) {
@@ -14,12 +12,12 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password"])) {
    // if(isset($currentPage)) 
        // redirect($currentPage, "Login successful! Welcome back.");
       // else 
-        redirect("index.php", "Login successful! Welcome back.");
+        redirect("index.php", "Login avvenuto con successo.");
        //echo("Login successful! Welcome back.");
        session_destroy();
     }
     else {
-        redirect("user.php", "Incorrect user name and/or password.");
+        redirect("user.php", "Email o password incorretti.");
         session_destroy();
     }
 }

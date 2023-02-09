@@ -23,15 +23,25 @@ if (isset($_FILES['file']) ) {
         move_uploaded_file($fileTmpName, $fileDestination);
         
         //echo "Image uploaded successfully!";
-        echo($fileDestination);
+        //echo "Immagine caricata correttamente";
+        //echo($fileDestination);
+         $arrayEcho[]=array("msg"=>"Immagine caricata correttamente","src"=>$fileDestination);
+         echo json_encode($arrayEcho);
+        
+
       } else {
-        echo "File size is too big!";
+        $arrayEcho[]=array("msg"=>"Dimensione mmagine troppo grande","src"=>"");
+        echo json_encode($arrayEcho);
+       
       }
     } else {
-      echo "There was an error uploading your file!";
+      $arrayEcho[]=array("msg"=>"C'e stato un errore durante l'upload dell'immagine","src"=>"");
+      echo json_encode($arrayEcho);
     }
   } else {
-    echo "You cannot upload files of this type!";
+    $arrayEcho[]=array("msg"=>"File non ammesso:Sono ammessi file con estensione jpg,jpeg e png","src"=>"");
+    echo json_encode($arrayEcho);
+    
   }
 }
 ?>

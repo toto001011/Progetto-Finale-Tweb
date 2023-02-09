@@ -7,26 +7,28 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password1"])&& isset($_REQUEST
   $nome=$_REQUEST["name"];
 
   if(check_if_exist($email)==TRUE){
-    redirect("user.php", "You already have an accounnt, please login");
+    redirect("user.php", "Hai già un account, perfavore accedi");
   }
+
+
   
 
-  if($password1===$password2){
+  if($password1===$password2 ){
+    if( (strrpos($email, "@")===false) || (strrpos($email, ".") === false)){
+      redirect("newUser.php", "Inserire una email valida");
+    }
     sign_new_user($nome,md5($password1),$email);
-    // $_SESSION["email"] = $email;     # start session, remember user info
+    session_start();
     $_SESSION["email"] = $email;     # start session, remember user info
-    // if(isset($currentPage)) 
-        // redirect($currentPage, "Login successful! Welcome back.");
-        // else 
-       redirect("index.php", "SignIn successful! Welcome.");
+    
+       redirect("index.php", "Accesso avvenuto con successo, Benvenuto.");
+       session_destroy();
     }else{
-        redirect("newUser.php", "The password doesn't match");
+        redirect("newUser.php", "Le password non corrispondono!");
+        session_destroy();
     }
    }
-   else {
-       redirect("user.php", "Incorrect user name and/or password.");
-   }
-       //redirect("user.php", "Login successful! Welcome back.");
+  
     
 
     

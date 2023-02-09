@@ -9,11 +9,15 @@ if (!isset($_SESSION)) {
   if (isset($_SESSION["password"])) {
     unset($_SESSION["password"]);
   }
+  if (isset($_SESSION["admin"])) {
+    unset($_SESSION["admin"]);
+  }
 }
 
 session_destroy();
+
 session_start();
-redirect("index.php", "Logout successful.");
+redirect("index.php", "Disconnessione avvenuto con successo.");
 session_destroy();
 
 ?>

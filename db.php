@@ -58,7 +58,7 @@ if (isset($_POST['get_all_products'])) {
 function update_product($idP,$nameP,$typeP,$priceP,$newImage){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-  if(isset($newImage)){
+  if($newImage!=""){
     $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP',img='$newImage'  WHERE id=$idP");
   }else{
     $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'  WHERE id=$idP");
@@ -238,7 +238,7 @@ function ensure_logged_in($visitedPage="index.php") {
   $_SESSION["currentPage"] = $visitedPage;
 
   if (!isset($_SESSION["email"])) {
-    redirect("user.php", "You must log in before you can view $visitedPage.");
+    redirect("user.php", "Devi essere loggato per visitare questa pagina.");
   }
 }
 
@@ -249,7 +249,7 @@ function ensure_admin($visitedPage="index.php") {
   $_SESSION["currentPage"] = $visitedPage;
 
   if (!isset($_SESSION["admin"])) {
-    redirect("user.php", "You must be an admin to view $visitedPage.");
+    redirect("user.php", "Devi essere loggato come amministratore per visitare questa pagina.");
   }
 }
 
