@@ -19,8 +19,8 @@
     
 
     <ul id="navigation">
+    <li><a id="indexAdmin"  href="indexAdmin.php">Main Page</a></li>
       <li><a id="productsBtn"  href="productsAdmin.php">Products</a></li>
-     <!-- <li><a href="teachers.php">Teachers</a></li> -->
       <li><a href="admin.php">Log In/Out</a></li>
     </ul>
     

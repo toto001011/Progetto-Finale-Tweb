@@ -289,7 +289,14 @@ $(document).ready(function(){
 });
 }
 
+if (document.location.href.match("indexAdmin.php")||document.location.href.match("index.php")){
+ 
+  $(document).ready(function(){
 
+    $('#footer').css('margin-top','33%');
+  
+  })  
+}
 
 function addToBasket(idP){
   var data={

@@ -21,7 +21,7 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password1"])&& isset($_REQUEST
     session_start();
     $_SESSION["email"] = $email;     # start session, remember user info
     
-       redirect("index.php", "Accesso avvenuto con successo, Benvenuto.");
+       redirect("index.php", "Registrazione avvenuto con successo, Benvenuto.");
        session_destroy();
     }else{
         redirect("newUser.php", "Le password non corrispondono!");
