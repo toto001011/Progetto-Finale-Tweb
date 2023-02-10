@@ -38,7 +38,7 @@ include("login.php");
  
 
             while($row = $query_risult->fetch()) {
-              $arrayProd[]=array("name"=>$row["name"],"type"=>$row["type"],"price"=>$row["price"],"img"=>$row["img"],/*"img"=>base64_encode($row["img"]),*/"id"=>$row["Id"]);
+              $arrayProd[]=array("name"=>$row["name"],"type"=>$row["type"],"price"=>$row["price"],"img"=>$row["img"],"desc"=>$row["description"],"id"=>$row["Id"]);
              }
              echo json_encode($arrayProd);
 
@@ -59,6 +59,7 @@ include("login.php");
                 $priceP=$data["priceP"];
                 $idP=$data["id"];
                 $newImagePath='C:\xampp\htdocs\Progetto-Finale-Tweb\upload\\'.'idP'.$idP.'.jpg';
+                $desc=$data["desc"];
 
                 $newImage=file_get_contents($newImagePath);
                 $newImageEncoded=base64_encode($newImage);
@@ -68,9 +69,9 @@ include("login.php");
 
                 
             if(check_if_exist_product($idP)){
-                    update_product($idP,$nameP,$typeP,$priceP,$newImageEncoded);
+                    update_product($idP,$nameP,$typeP,$priceP,$newImageEncoded,$desc);
                 }else{
-                    add_product($idP,$nameP,$typeP,$priceP,$newImageEncoded);
+                    add_product($idP,$nameP,$typeP,$priceP,$newImageEncoded,$desc);
                 }
                 unlink($newImagePath);
 

@@ -30,6 +30,10 @@ $(document).ready(function(){
                       '<div class="prodotto">'+response[i].name+'</div>'+
                       '<div class="prodotto">'+response[i].type+'</div>'+
                       '<div class="prodotto">'+response[i].price+'€'+'</div>'+
+                      '<div clas="prodotto">'+
+                          '<textarea readonly  class="desc" id="desc" name="description"  >' +response[i].desc+ '</textarea>'+
+                          '<button id="showDesc" name="ShowDescriptionProduct" onclick="showDesc('+$idP+')">Mosta Descrizione</button>'+
+                      '</div>'+
                       '<div id="id_td" value="1class="prodotto">  </div>' + 
                     '<div class="prodotto"><button id="add_to_basket" name="addToBasketbtn" onclick="addToBasket('+$idP+')"  >'+"Aggiungi al carrello" +'</button></div>' +                 
                   '</div>');
@@ -45,6 +49,9 @@ $(document).ready(function(){
      $('#add_to_basket').attr('id','add_to_basket'+$idP);
      $('#add_to_basket').attr('onclick','addToBasket('+$idP+')');
 
+     $('#showDesc').attr('id','showDesc'+$idP);
+     $('#desc').attr('id','desc'+$idP);
+
      var img=new Image();
      img.src = 'data:image/png;base64,' + response[i].img;
      img.id='img_id'+$idP;
@@ -54,6 +61,8 @@ $(document).ready(function(){
      imageCell.innerHTML = ""; // Clear the cell's contents
      imageCell.appendChild(img); 
      $('#img_id'+$idP).attr('draggable','false');
+     $('#desc'+$idP).css('overflow-y','scroll');
+
      //document.getElementById("id"+$idP).draggable( "option", "disabled", true );
         
      //$('#productstable').appendChild(img);
@@ -90,7 +99,7 @@ $(document).ready(function(){
       console.log(response_basket);
 
       $('#header').append(
-      '<div class="head">'+
+      '<div class="head_basket">'+
         '<div class="head_prod">Nome prodotto</div>'+
         '<div class="head_prod">Categoria</div>'+
         '<div class="head_prod">Prezzo</div>'+
@@ -212,6 +221,7 @@ $(document).ready(function(){
              
         
       '<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+
+      '<td><textarea class="textBox" id="descP" name="productDescription" rows="3" cols="50">'+response[i].desc+'</textarea></td>'+
        '<td id="id_td">' +'</td><td>'+
        '<td>'+
         '<input type="file" id="newImage"><br>'+
@@ -233,6 +243,7 @@ $(document).ready(function(){
       idP=response[i].id;
 
      $('#id_td').attr('id', 'img_id'+$idP);
+     $('#descP').attr('id', 'descP'+$idP);
      $('#prodotto').attr('id','prodotto'+$idP);
      $('#nameP').attr('id','nameP'+$idP);
      $('#typeP').attr('id','typeP'+$idP);
@@ -298,6 +309,26 @@ if (document.location.href.match("indexAdmin.php")||document.location.href.match
   })  
 }
 
+
+var open=false;
+function showDesc(idP){
+    $(document).ready(function(){
+      open=!open;
+      if(open==true){
+        $("#desc"+idP).animate({height: "300px"});
+        
+        document.getElementById("showDesc"+idP).innerHTML="Nascondi Descrizione";
+        
+
+      }else{
+        $("#desc"+idP).animate({height: "0px"});
+        document.getElementById("showDesc"+idP).innerHTML="Mostra Descrizione";
+
+      }
+      })
+
+ }
+  
 function addToBasket(idP){
   var data={
     idP:idP,
@@ -595,6 +626,7 @@ function saveData(idP){
     //typeP:$("typeP"+idP).val(),
     priceP:document.getElementById("priceP"+idP).value,
     newImage:document.getElementById("newImage"+idP).value,
+    desc:document.getElementById("descP"+idP).value,
     id:idP,
     function:"saveData",
 
@@ -604,17 +636,19 @@ function saveData(idP){
  /* var test=document.getElementById("typeP"+idP).value;
   alert(test);
 */
-
+alert(document.getElementById("descP"+idP).value+ "  "+ data["desc"]);
 
   $.ajax({
     type: 'POST',
     url:'saveModify.php',
     contentType: "application/json",
+    datatype:'json',
     data:JSON.stringify(data),//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
    
     
     success: function(response){
       //alert("PHP CODE EXECUTED",response);
+      
       $("#flash").fadeIn(1000);
       var msg=document.getElementById("flash")
       msg.innerHTML="Prodotto modificato correttamente";
@@ -777,18 +811,9 @@ function addNewProducts(idP){
   
   }
 
-  function log(){
-    
-        $("#msg").fadeIn(1000);
-       /* var msg=document.getElementById("flash")
-        msg.innerHTML="Utente loggato correttamente";*/
-        $("#msg").fadeOut(4000);
-        $("#msg").css('display','flex');
-       
+  
 
 
-
-  }
 /*-------------------------------*/
 
 

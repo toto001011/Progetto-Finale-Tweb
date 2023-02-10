@@ -55,13 +55,13 @@ if (isset($_POST['get_all_products'])) {
 }
 
 #Save data modified by admin
-function update_product($idP,$nameP,$typeP,$priceP,$newImage){
+function update_product($idP,$nameP,$typeP,$priceP,$newImage,$desc){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
   if($newImage!=""){
-    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP',img='$newImage'  WHERE id=$idP");
+    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP',img='$newImage',description='$desc'  WHERE id=$idP");
   }else{
-    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP'  WHERE id=$idP");
+    $rows = $db->query("UPDATE products SET name='$nameP',type='$typeP', price='$priceP',description='$desc'  WHERE id=$idP");
   }
   
 }
@@ -83,14 +83,14 @@ function  check_if_exist_product($idP){
 }
 
 
-function add_product($idP,$nameP,$typeP,$priceP,$newImage){
+function add_product($idP,$nameP,$typeP,$priceP,$newImage,$desc){
   global $dbconnstring, $dbuser, $dbpasswd;
   $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
 
   if(isset($newImage)){
-    $query = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP', '$newImage'  )");
+    $query = $db->query("INSERT INTO products  values ($idP,'$nameP','$typeP', '$priceP', '$newImage' ,'$desc' )");
   }else{
-    $rows = $db->query("INSERT INTO products  values ( $idP, '$nameP','$typeP', '$priceP',' ')");
+    $rows = $db->query("INSERT INTO products  values ( $idP, '$nameP','$typeP', '$priceP',' ','$desc')");
   }
   
 }

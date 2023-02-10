@@ -17,7 +17,7 @@ ensure_admin("products.php");
 
 
 <table id="productstable">
-  <tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th></tr>
+  <tr><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Descrizione</th>><th>Immagine</th></tr>
 
   
 </table>

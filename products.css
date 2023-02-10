@@ -23,7 +23,11 @@
   float: right;
 }
 
-
+textarea{
+height: 0px;
+width: 18em;
+resize: none;
+}
  #pay,#checkout{
 
   text-align: right;
@@ -33,15 +37,15 @@ h1, #navigation, #flash,#msg {
   text-align: center;
 }
 
-table th,.prodotti_ul,.head {
+table th,.prodotti_ul,.head,.head_basket {
   border-bottom: 1px solid #aaa;
   text-align: left;
 }
 
-table th,.prodotti_ul, .head,table td {
+table th,.prodotti_ul, .head,.head_basket,table td {
   padding-right: 1em;
 }
-.prodotto,.prodotto_li {
+.prodotto,.prodotto_li,.desc {
      overflow: hidden;
     flex: 1;
     justify-content: center;
@@ -55,7 +59,7 @@ table th,.prodotti_ul, .head,table td {
 .prodotti,.prodotti_ul{
   overflow: hidden;
   display:flex;
-  width: 50%;
+  width: 80%;
 }
 .head_prod{
   overflow: hidden;
@@ -64,11 +68,19 @@ table th,.prodotti_ul, .head,table td {
     align-items: center;
     display: flex;
 }
-.head{
+.head,.head_basket{
   overflow: hidden;
   display:flex;
-  width: 41%;
+  width: 67%;
 }
+.head_basket{
+  width:80%
+}
+.textBox{
+  width: 70%;
+    height: 81px;
+}
+
 
 #flash,#msg {
   background-color: #ffffcc;
