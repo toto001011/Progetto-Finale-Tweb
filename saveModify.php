@@ -49,7 +49,8 @@ include("login.php");
             $lastIndex=get_last_index();
             echo($lastIndex);
 
-             }else 
+             }else
+
          
          
                 if($data["function"]=="saveData"){
@@ -57,14 +58,28 @@ include("login.php");
                 $nameP=$data["nomeP"];
                 $typeP=$data["typeP"];
                 $priceP=$data["priceP"];
+                $priceP=floatval($priceP);
                 $idP=$data["id"];
                 $newImagePath='C:\xampp\htdocs\Progetto-Finale-Tweb\upload\\'.'idP'.$idP.'.jpg';
                 $desc=$data["desc"];
+                $response=array("priceType"=>true,"descLen"=>true);
 
-                $newImage=file_get_contents($newImagePath);
-                $newImageEncoded=base64_encode($newImage);
+                if(file_exists($newImagePath)==1){
+                    $newImage=file_get_contents($newImagePath);
+                    $newImageEncoded=base64_encode($newImage);
+                }else{
+                    $newImageEncoded="";
+                }
+                /*if(gettype($priceP)!="double" && gettype($priceP)!="integer" ){
+                    $response["priceType"]=false;
+                    
+                }*/
                 
-                //echo($newImageEncoded."\n\n");
+                $response["priceType"]=$priceP;
+                if(strlen($desc)>500){
+                   $response["descLen"]=false;
+
+                }
 
 
                 
@@ -73,6 +88,7 @@ include("login.php");
                 }else{
                     add_product($idP,$nameP,$typeP,$priceP,$newImageEncoded,$desc);
                 }
+                if(file_exists($newImagePath)==1)
                 unlink($newImagePath);
 
 

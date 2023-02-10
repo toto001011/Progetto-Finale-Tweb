@@ -220,8 +220,8 @@ $(document).ready(function(){
       
              
         
-      '<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+
-      '<td><textarea class="textBox" id="descP" name="productDescription" rows="3" cols="50">'+response[i].desc+'</textarea></td>'+
+      '<td>'+'<input id="priceP" type ="number" value="'+response[i].price+'"> </input>'+'</td>'+
+      '<td><textarea class="textBox" id="descP" name="productDescription" rows="3" cols="50" maxlength="500">'+response[i].desc+'</textarea></td>'+
        '<td id="id_td">' +'</td><td>'+
        '<td>'+
         '<input type="file" id="newImage"><br>'+
@@ -636,25 +636,23 @@ function saveData(idP){
  /* var test=document.getElementById("typeP"+idP).value;
   alert(test);
 */
-alert(document.getElementById("descP"+idP).value+ "  "+ data["desc"]);
+//alert(document.getElementById("descP"+idP).value+ "  "+ data["desc"]);
 
   $.ajax({
     type: 'POST',
     url:'saveModify.php',
     contentType: "application/json",
-    datatype:'json',
     data:JSON.stringify(data),//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
    
     
     success: function(response){
       //alert("PHP CODE EXECUTED",response);
+          $("#flash").fadeIn(1000);
+          var msg=document.getElementById("flash")
+          msg.innerHTML="Prodotto modificato correttamente";
+          $("#flash").fadeOut(4000);
+          
       
-      $("#flash").fadeIn(1000);
-      var msg=document.getElementById("flash")
-      msg.innerHTML="Prodotto modificato correttamente";
-      $("#flash").fadeOut(4000);
-
-     
       
 
       //location.reload(true);
