@@ -1,7 +1,7 @@
 <?php
 # Shows all grades a student has earned. Student must be logged in.
 include("db.php");
-ensure_admin("products.php");
+ensure_admin();
 ?>
 
 <?php include("topAdmin.php"); ?>

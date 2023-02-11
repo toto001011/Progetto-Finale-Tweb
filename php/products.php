@@ -1,6 +1,6 @@
 <?php
 include("db.php");
-ensure_logged_in("products.php");
+ensure_logged_in();
 ?>
 
 <?php include("top.php"); ?>

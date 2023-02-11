@@ -1,8 +1,6 @@
 <?php
 
-//include("db.php");
 include("login.php");
-//session_start();
   
          $data = json_decode(file_get_contents('php://input'), true);
          if($data["function"]=="visualize_basket"){
@@ -17,7 +15,6 @@ include("login.php");
         $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
 
         $query_risult= $db->query("SELECT * FROM carrello join clienti on(idC=clienti.id) JOIN products on (idP=products.id) WHERE clienti.email='$email' ");
-        // Check connection
  
             while($row = $query_risult->fetch()) {
               $arrayProd[]=array("name"=>$row["name"],"type"=>$row["type"],"price"=>$row["price"],"img"=>$row["img"],"id"=>$row["Id"],"qty"=>$row["qty"]);
@@ -70,11 +67,7 @@ include("login.php");
                 }else{
                     $newImageEncoded="";
                 }
-                /*if(gettype($priceP)!="double" && gettype($priceP)!="integer" ){
-                    $response["priceType"]=false;
-                    
-                }*/
-                
+               
                 $response["priceType"]=$priceP;
                 if(strlen($desc)>500){
                    $response["descLen"]=false;
@@ -92,11 +85,6 @@ include("login.php");
                 unlink($newImagePath);
 
 
-               /* $lastIndex=get_last_index();
-                $arrayIndex=array("index"=>$lastIndex);
-                echo(json_encode($arrayIndex));*/
-               // $_SESSION["flash"]="Modifiche aggiornate";
-        
                     }else 
                 if($data["function"]=="delete"){
                     //FUNZIONE CHE ELIMINA UN PRODOTTO DALLA VENTIDA(admin)
@@ -113,7 +101,7 @@ include("login.php");
                     $password =$_SESSION["password"];
                     $idP=$data["idP"];
 
-                    addToBasket($email,$password,$idP);
+                    addToBasket($email,$idP);
                     }else if($data["function"]=="delBasketProduct"){
                         $email=$_SESSION["email"];
                         $idP=$data["idP"];
