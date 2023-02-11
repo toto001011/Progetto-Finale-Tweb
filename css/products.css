@@ -79,6 +79,7 @@ table th,.prodotti_ul, .head,.head_basket,table td {
 .textBox{
   width: 70%;
     height: 81px;
+    resize: auto;
 }
 
 

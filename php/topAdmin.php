@@ -5,11 +5,9 @@
 <html>
   <head>
     <title>Salvatore Online Shop</title>
-    <link href="products.css" type="text/css" rel="stylesheet">
-    <script src="jquery-3.6.1.js"></script>
-    <script src="Visualize.js" type="text/javascript"></script>
-     <script scr="checkPassword.js" type="text/javascript"></script> 
-
+    <link href="../css/products.css" type="text/css" rel="stylesheet">
+    <script src="../js/jquery-3.6.1.js"></script>
+    <script src="../js/Visualize.js" type="text/javascript"></script>
   </head>
 
 

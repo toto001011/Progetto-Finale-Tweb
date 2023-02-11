@@ -1,6 +1,10 @@
+/**
+ * In questo file sono contenute tutte le funzioni JavaScript
+ * 
+ */
+
 if (document.location.href.match("products.php")){
 $(document).ready(function(){
-//  $("#productsBtn").on('click',function(){
   var data={
     function:"visualize_products"
   }
@@ -221,7 +225,11 @@ $(document).ready(function(){
              
         
       '<td>'+'<input id="priceP" type ="number" value="'+response[i].price+'"> </input>'+'</td>'+
-      '<td><textarea class="textBox" id="descP" name="productDescription" rows="3" cols="50" maxlength="500">'+response[i].desc+'</textarea></td>'+
+      '<td>'+
+      '<textarea class="textBox" id="descP" name="productDescription" rows="3" cols="50" maxlength="500">'+response[i].desc+'</textarea>'+
+      '<button id="resetSize" name="reretSizeDescriptionProduct" onclick="resetSizeDesc('+response[i].id+')">Reset size</button>'+
+      
+      '</td>'+
        '<td id="id_td">' +'</td><td>'+
        '<td>'+
         '<input type="file" id="newImage"><br>'+
@@ -229,8 +237,7 @@ $(document).ready(function(){
        '</td>'+
        '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
        '<td><button id="delete_button" name="deletebtn" onclick="deleteProduct()" >'+"Elimina il Prodotto" +'</button>' +'</td>'+
-       
-        '</tr>');
+       '</tr>');
         //onclick="uploadImg()"
         /*' 
               '<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+
@@ -244,6 +251,8 @@ $(document).ready(function(){
 
      $('#id_td').attr('id', 'img_id'+$idP);
      $('#descP').attr('id', 'descP'+$idP);
+     $('#resetSize').attr('id', 'resize'+$idP);
+
      $('#prodotto').attr('id','prodotto'+$idP);
      $('#nameP').attr('id','nameP'+$idP);
      $('#typeP').attr('id','typeP'+$idP);
@@ -315,7 +324,7 @@ function showDesc(idP){
     $(document).ready(function(){
       open=!open;
       if(open==true){
-        $("#desc"+idP).animate({height: "300px"});
+        $("#desc"+idP).animate({height: "210px"});
         
         document.getElementById("showDesc"+idP).innerHTML="Nascondi Descrizione";
         
@@ -327,6 +336,13 @@ function showDesc(idP){
       }
       })
 
+ }
+
+ function resetSizeDesc(idP){
+  $("#descP"+idP).animate({width: "70%",height: "81px"});
+  /*$("#descP"+idP).css("width", "70%");
+  $("#descP"+idP).css("height", "81px");*/
+  
  }
   
 function addToBasket(idP){
@@ -359,6 +375,8 @@ function addToBasket(idP){
     }
   });
 }
+
+
 
 function check_field(){
   var password1 = document.getElementById("password1").value;
@@ -633,10 +651,6 @@ function saveData(idP){
 
 
   }
- /* var test=document.getElementById("typeP"+idP).value;
-  alert(test);
-*/
-//alert(document.getElementById("descP"+idP).value+ "  "+ data["desc"]);
 
   $.ajax({
     type: 'POST',
@@ -738,6 +752,10 @@ function addNewProducts(idP){
     '</select>'+
         
         '<td>'+'<input id="priceP" type ="text" value="prezzo"> </input>'+'</td>'+
+        '<td>'+
+      '<textarea class="textBox" id="descP" name="productDescription" rows="3" cols="50" maxlength="500"></textarea>'+
+      '<button id="resetSize" name="reretSizeDescriptionProduct" onclick="resetSizeDesc()">Reset size</button>'+
+      '</td>'+
         '<td id="id_td" value="immagine">' +'</td><td>'+
         '<td>'+
           '<input type="file" id="newImage"><br>'+
@@ -758,6 +776,10 @@ function addNewProducts(idP){
       $('#save_button').attr('id','savebtn'+$idP);
       $('#upload_img').attr('onclick','upload('+$idP+')');
       $('#upload_img').attr('id','upload_img'+$idP);
+      $('#resetSize').attr('onclick', 'resetSizeDesc('+$idP+')');
+      $('#resetSize').attr('id', 'resize'+$idP);
+      $('#descP').attr('id', 'descP'+$idP);
+
     
   /*var data={
     nomeP:document.getElementById("nameP"+idP).value,

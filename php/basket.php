@@ -1,5 +1,7 @@
 <?php
-# Shows all grades a student has earned. Student must be logged in.
+/**
+ * Pagina che definisce l'html del carrello
+ */
 include("db.php");
 ensure_logged_in("basket.php");
 ?>
@@ -15,7 +17,6 @@ ensure_logged_in("basket.php");
 
 <div id="checkout">
         
- <!-- <tr id="label"><th>Nome prodotto</th><th>Categoria</th><th>Prezzo</th><th>Immagine</th><th>Quantità</th></tr>-->
     <div id="total"></div>
         
 

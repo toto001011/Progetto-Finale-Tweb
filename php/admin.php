@@ -1,3 +1,4 @@
+<!--Pagina html del login dell'utente amministratore -->
 <?php include("topAdmin.php"); ?>
 
 <?php if (isset($_SESSION["email"])) { ?>
