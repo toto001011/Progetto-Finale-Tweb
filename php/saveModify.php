@@ -1,17 +1,16 @@
 <?php
-
+//File php che contiene parte delle funzioni che vengono usate dal javascript
 include("login.php");
   
          $data = json_decode(file_get_contents('php://input'), true);
          if($data["function"]=="visualize_basket"){
             
-            //FUNZIONE CHE ESTRAE I PRODOTTI NEL CARRELLO
+        //FUNZIONE CHE ESTRAE I PRODOTTI NEL CARRELLO
         $dbconnstring = 'mysql:dbname=shop;host=localhost:3306';
         $dbuser = 'root';
         $dbpasswd = '';
         
-          $email=$_SESSION["email"];
-        // Create connection
+        $email=$_SESSION["email"];
         $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
 
         $query_risult= $db->query("SELECT * FROM carrello join clienti on(idC=clienti.id) JOIN products on (idP=products.id) WHERE clienti.email='$email' ");

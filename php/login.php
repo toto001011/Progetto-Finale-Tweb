@@ -1,4 +1,5 @@
 <?php
+//File che gestisce l'accesso
 include("db.php");
 
 if (isset($_REQUEST["email"]) && isset($_REQUEST["password"])) {
@@ -9,11 +10,8 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password"])) {
    
     $_SESSION["email"] = $email;     # start session, remember user info
     $_SESSION["password"] = $password;
-   // if(isset($currentPage)) 
-       // redirect($currentPage, "Login successful! Welcome back.");
-      // else 
+  
         redirect("index.php", "Login avvenuto con successo.");
-       //echo("Login successful! Welcome back.");
        session_destroy();
     }
     else {

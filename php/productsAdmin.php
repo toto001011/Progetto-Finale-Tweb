@@ -1,5 +1,7 @@
+<!-- File che definisce l'html della pagina dei prodotti admin -->
+
 <?php
-# Shows all grades a student has earned. Student must be logged in.
+
 include("db.php");
 ensure_admin();
 ?>

@@ -1,5 +1,5 @@
 <?php
-# This page shows a login form for the student to log out of the system.
+//File che gestisce la disconnesione
 require_once("db.php");
 
 if (!isset($_SESSION)) {

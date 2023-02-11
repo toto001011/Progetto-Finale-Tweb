@@ -1,3 +1,5 @@
+<!-- File che definisce l'htm comune a tutte le pagine admin-->
+
 <?php
     if (!isset($_SESSION)) { session_start(); }
 ?>

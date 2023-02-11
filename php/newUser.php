@@ -1,3 +1,4 @@
+<!-- File che definisce l'html della pagina di registrazione-->
 <?php include("top.php"); ?>
 
 <?php if (isset($_SESSION["name"])) { ?>
@@ -22,7 +23,6 @@
 <?php } ?>
 
 <?php include("bottom.php"); 
-//action="signIn.php" onsubmit ="return check_password()"
 
-//onsubmit ="return check_field()"
+
 ?>

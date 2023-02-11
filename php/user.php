@@ -1,3 +1,5 @@
+<!-- File che definisce della pagina di login dei clienti-->
+
 <?php include("top.php"); ?>
 
 <?php if (isset($_SESSION["email"])) { ?>

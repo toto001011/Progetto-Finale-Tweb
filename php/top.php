@@ -1,3 +1,4 @@
+<!-- File che definisce l'htm comune a tutte le pagine clienti-->
 <?php
     if (!isset($_SESSION)) { session_start(); }
 ?>
@@ -31,7 +32,6 @@
     </div>
     <?php
     if (isset($_SESSION["flash"])) {
-      # temporary message across page redirects
       ?>
       <div id="msg"> <?= $_SESSION["flash"] ?> </div>
       <?php

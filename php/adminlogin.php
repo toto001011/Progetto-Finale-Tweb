@@ -9,7 +9,7 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password"])) {
   $password = $_REQUEST["password"];
   if (is_admin_password_correct($email, md5($password)) ) {
    
-    $_SESSION["admin"] = $email;     #
+    $_SESSION["admin"] = $email;     
     $_SESSION["email"] = $email;
   
         redirect("productsAdmin.php", "Login avvenuto con successo");

@@ -1,4 +1,5 @@
 <?php
+//Funzione che carica la foto in "locale" temporaneamente per poi salvarla codificata in base64 nel db 
 if (isset($_FILES['file']) ) {
   $idP=$_POST['idP'];
   $file = $_FILES['file'];

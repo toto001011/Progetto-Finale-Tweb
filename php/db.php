@@ -1,5 +1,5 @@
 <?php
-
+//File che contiene tutte de funzioni per la comunicazione con il db
 $dbconnstring = 'mysql:dbname=shop;host=localhost:3306';
 $dbuser = 'root';
 $dbpasswd = '';

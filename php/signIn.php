@@ -1,4 +1,5 @@
 <?php
+//File php per la gestione della registrazione
 include("db.php");
 if (isset($_REQUEST["email"]) && isset($_REQUEST["password1"])&& isset($_REQUEST["password2"])) {
   $email = $_REQUEST["email"];
@@ -19,7 +20,7 @@ if (isset($_REQUEST["email"]) && isset($_REQUEST["password1"])&& isset($_REQUEST
     }
     sign_new_user($nome,md5($password1),$email);
     session_start();
-    $_SESSION["email"] = $email;     # start session, remember user info
+    $_SESSION["email"] = $email;     
     
        redirect("index.php", "Registrazione avvenuto con successo, Benvenuto.");
        session_destroy();

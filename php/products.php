@@ -1,3 +1,6 @@
+
+<!-- File che definisce l'html della pagina dei prodotti clienti -->
+
 <?php
 include("db.php");
 ensure_logged_in();
@@ -6,13 +9,7 @@ ensure_logged_in();
 <?php include("top.php"); ?>
 <h2>Prodotti in vendita:</h2>
 
-<div id="productsDiv">
-
-
-
-
-
-</div>
+<div id="productsDiv"></div>
 
 <div class="head">
     <div class="head_prod">Nome prodotto</div>
