@@ -1,5 +1,6 @@
 <?php
 //File php per la gestione della registrazione
+
 include("db.php");
 if (isset($_REQUEST["email"]) && isset($_REQUEST["password1"])&& isset($_REQUEST["password2"])) {
   $email = $_REQUEST["email"];

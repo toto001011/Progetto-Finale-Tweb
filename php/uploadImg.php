@@ -23,9 +23,7 @@ if (isset($_FILES['file']) ) {
         $fileDestination = 'upload/'.$fileNameNew;
         move_uploaded_file($fileTmpName, $fileDestination);
         
-        //echo "Image uploaded successfully!";
-        //echo "Immagine caricata correttamente";
-        //echo($fileDestination);
+   
          $arrayEcho[]=array("msg"=>"Immagine caricata correttamente","src"=>$fileDestination);
          echo json_encode($arrayEcho);
         

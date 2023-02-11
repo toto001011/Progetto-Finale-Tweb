@@ -3,9 +3,6 @@
  * 
  */
 
-/**
- * Funzione che visualizza al cliente i prodotti in vendita
- */
 if (document.location.href.match("products.php")){
 $(document).ready(function(){
   var data={
@@ -19,6 +16,7 @@ $(document).ready(function(){
     dataType: 'json',
     success: function(response) {
 
+    //called when successful
     $('#carrello').css('display', 'inline');
    
     console.log(response);
@@ -28,7 +26,9 @@ $(document).ready(function(){
   
     var trHTML = '';
     $.each(response, function (i, item) {
+     // var dataURI = 'data:image/jpeg;base64'+response[i].img;
      $idP=response[i].id;
+     //document.getElementById('productstable').appendChild(img)
      $('#productstable').append(
                     '<div id="'+$idP+'" class="prodotti" draggable="true" ondragstart="drag(event)">'+
                       '<div class="prodotto">'+response[i].name+'</div>'+
@@ -41,9 +41,15 @@ $(document).ready(function(){
                       '<div id="id_td" value="1class="prodotto">  </div>' + 
                     '<div class="prodotto"><button id="add_to_basket" name="addToBasketbtn" onclick="addToBasket('+$idP+')"  >'+"Aggiungi al carrello" +'</button></div>' +                 
                   '</div>');
+//     $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
       $idP=response[i].id;
+      //$( "#id_td" ).draggable( "destroy" );
+      //$( "#id_td" )
      $('#id_td').attr('id', 'id'+$idP);
      $('#img').on('dragstart', function(event) { alert("image dragged") });
+     //?compna=",$compname,"
+    // $('#idP' ).prop("href", "addToBasket.php?idP="+$idP);
+     //$('#idP').attr('id', 'idP'+$idP);
      $('#add_to_basket').attr('id','add_to_basket'+$idP);
      $('#add_to_basket').attr('onclick','addToBasket('+$idP+')');
 
@@ -56,12 +62,14 @@ $(document).ready(function(){
      img.draggable="false";
 
      var imageCell = document.getElementById("id"+$idP);
-     imageCell.innerHTML = ""; 
+     imageCell.innerHTML = ""; // Clear the cell's contents
      imageCell.appendChild(img); 
      $('#img_id'+$idP).attr('draggable','false');
      $('#desc'+$idP).css('overflow-y','scroll');
 
-    
+     //document.getElementById("id"+$idP).draggable( "option", "disabled", true );
+        
+     //$('#productstable').appendChild(img);
     });
    
 },
@@ -70,16 +78,16 @@ $(document).ready(function(){
     console.log(e.message);
     }
     });
+ // });
 });
 }
 
-/**
- * Funzione che visualizza il carrello di un determinato cliente
- */
+
 if (document.location.href.match("basket.php")){
  
 $(document).ready(function(){
   $('#footer').css('margin-top','33%');
+  //  $("#productsBtn").on('click',function(){
     var data={
       function:"visualize_basket"
     }
@@ -107,11 +115,13 @@ $(document).ready(function(){
     
       var trHTML = '';
       var totBasket=0;
+      //$('#empty').innerHTML=" ";
       document.getElementById("empty").innerHTML=" ";
       $('#checkout').css('display','block');
       $.each(response_basket, function (i, item) {
 
         $idP=response_basket[i].id;      
+       //$('#basketProductsTable').append('<tr><td>'+response_basket[i].name+'</td>'+'<td>'+response_basket[i].type+'</td>'+'<td>'+response_basket[i].price+'€ </td>'+ '<td id="id_td">' +'</td><td>'+'<button id="btnDec" type="button" onclick="decBasketQty()"> -' +'</button>'+ " "+response_basket[i].qty+" "+'<button type="button" onclick="incBasketQty()" id="btnInc"> +' +'</button>'+'</td></tr>');
        $('#basketProductsTable').append(
         '<div id="'+$idP+'" class="prodotti" draggable="false" ondragstart="drag(event)">'+
           '<div class="prodotto">'+response_basket[i].name+'</div>'+
@@ -141,20 +151,29 @@ $(document).ready(function(){
        $('#btnInc').attr('id', 'btnInc'+$idP);
        $('#btnDec').attr('id', 'btnDec'+$idP);
        $('#btnDel').attr('id', 'btnDel'+$idP);
-         
+       
+      // $('#img').attr('src','data:image/png;base64,' + response_basket[i].img);
+  
+
+
        $('#idP').attr('id', 'idProdotto'+$idP);
        var img=new Image();
+      // alert(response_basket[i].img);
        img.src = 'data:image/png;base64,' + response_basket[i].img;
   
        var imageCell = document.getElementById("img_id"+$idP);
        imageCell.innerHTML = ""; // Clear the cell's contents
        imageCell.append(img); 
           
+       //$('#productstable').appendChild(img);
       });
       $('#total').append('<a><h3>'+ 'TOTALE: </a>'+' <a id="tot">'+totBasket+'</a>€</h3></a></li>');
       $('#footer').css('margin-top','1%');
       
-    
+    /*  if ($('#basketProductsTable').children().length ==0) {
+       
+        $('#footer').css('margin-top','18%');
+      }*/
       
   },
       error: function(e) {
@@ -162,13 +181,10 @@ $(document).ready(function(){
       console.log(e.message);
       }
       });
+   // });
   });
 }
 
-/**
- * Funzione che visualizza all'amministratore i prodotti in vendita 
- * attualmente e permette di apportarne delle modifiche
- */
 if (document.location.href.match("productsAdmin.php")){
  
 $(document).ready(function(){
@@ -192,21 +208,27 @@ $(document).ready(function(){
   
     var trHTML = '';
     $.each(response, function (i, item) {
+     // var dataURI = 'data:image/jpeg;base64'+response[i].img;
     
+     //document.getElementById('productstable').appendChild(img)
+    // $('#productstable').append('<tr id="prodotto"><td>'+'<input id="nameP" type ="text" value="'+response[i].name+'"> </input>'+'</td>'+'<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+'<td>'+'<input id="priceP" type ="text" value="'+response[i].price+'"> </input>'+'</td>'+ '<td id="id_td">' +'</td><td>'+'<input type="file" id="newImage"><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td></tr>');
     $('#productstable').append(
       '<tr id="prodotto">'+
       '<td>'+'<input id="nameP" type ="text" value="'+response[i].name+' "> </input>'+'</td>'+
-      '<td>'+
-      '<select  name="type" id="typeP"  value="'+response[i].type+'">'+
-        '<option id="op2"value="Telefonia" >Telefonia</option>'+
-        '<option id="op1" value="Elettronica" >Elettronica</option>'+
-        '<option id="op3" value="Informatica">Informatica</option>'+
-        '<option id="op4" value="Altro">Altro</option>'+
-      '</select>'+            
+      '<td><select  name="type" id="typeP"  value="'+response[i].type+'">'+
+      '<option id="op2"value="Telefonia" >Telefonia</option>'+
+      '<option id="op1" value="Elettronica" >Elettronica</option>'+
+      '<option id="op3" value="Informatica">Informatica</option>'+
+      '<option id="op4" value="Altro">Altro</option>'+
+    '</select>'+ 
+      
+             
+        
       '<td>'+'<input id="priceP" type ="number" value="'+response[i].price+'"> </input>'+'</td>'+
       '<td>'+
       '<textarea class="textBox" id="descP" name="productDescription" rows="3" cols="50" maxlength="500">'+response[i].desc+'</textarea>'+
       '<button id="resetSize" name="reretSizeDescriptionProduct" onclick="resetSizeDesc('+response[i].id+')">Reset size</button>'+
+      
       '</td>'+
        '<td id="id_td">' +'</td><td>'+
        '<td>'+
@@ -216,7 +238,14 @@ $(document).ready(function(){
        '<td><button id="save_button" name="savebtn" onclick="saveData()" >'+"Salva Modifica" +'</button>' +'</td>'+
        '<td><button id="delete_button" name="deletebtn" onclick="deleteProduct()" >'+"Elimina il Prodotto" +'</button>' +'</td>'+
        '</tr>');
+        //onclick="uploadImg()"
+        /*' 
+              '<td>'+'<input id="typeP" type ="text" value="'+response[i].type+'"> </input>'+'</td>'+
 
+        */
+        //
+
+  // $('#productstable').append('<tr>  <td id="id_td">' +'</td>' +'<td>'+response[i].name+'</td>'+'<td>'+response[i].type+'</td>'+'<td>'+response[i].price+'</td>'+  '<td><a href="basket.php">'+"Acquista" +'</a></td>+</tr>');
    $idP= response[i].id;
       idP=response[i].id;
 
@@ -231,7 +260,9 @@ $(document).ready(function(){
      $('#newImage').attr('id','newImage'+$idP);
      $('#save_button').attr('onclick','saveData('+$idP+')');
      $('#save_button').attr('id','save_button'+$idP);
-    
+     /*$('#upload_img').attr('onclick','uploadImg('+$idP+')');
+     $('#upload_img').attr('id','upload_img'+$idP);
+     */
      $('#upload_img').attr('onclick','upload('+$idP+')');
      $('#upload_img').attr('id','upload_img'+$idP);
 
@@ -259,6 +290,7 @@ $(document).ready(function(){
      imageCell.innerHTML = ""; // Clear the cell's contents
      imageCell.appendChild(img); 
         
+     //$('#productstable').appendChild(img);
     });
     $('#newProduct').append('<button id="newProduct" name="newPoductbtn" onclick="addNewProducts('+($idP+1)+')" >'+"Aggiungi un nuovo prodotto" +'</button>')
     
@@ -273,12 +305,10 @@ $(document).ready(function(){
     });
     
 
+ // });
 });
 }
 
-/**
- * Funzione che, per estetica, modifica i margini dell'elemento footer
- */
 if (document.location.href.match("indexAdmin.php")||document.location.href.match("index.php")){
  
   $(document).ready(function(){
@@ -289,12 +319,6 @@ if (document.location.href.match("indexAdmin.php")||document.location.href.match
 }
 
 
-/**
- * Funzione che aumenta e/o diminuisce la dimensione della textarea 
- * nella quale viene visualizzata dal cliente la descrizione 
- * 
- * @param:idP identifica il prodotto del quale mostrare la descrizione 
- */
 var open=false;
 function showDesc(idP){
     $(document).ready(function(){
@@ -314,23 +338,13 @@ function showDesc(idP){
 
  }
 
- /**
-  * Funzione che reimposta la visualizzazione da parte dell'amministratore
-  *  del campo descrizione alle dimensioni di default
-  * 
-  * @param:idP identifica il prodotto del quale reimpostare il campo descrizione
-  */
-
  function resetSizeDesc(idP){
   $("#descP"+idP).animate({width: "70%",height: "81px"});
-  
+  /*$("#descP"+idP).css("width", "70%");
+  $("#descP"+idP).css("height", "81px");*/
   
  }
-  /**
-   * Funzione che manda una richiesta di aggiunta, da parte di un cliente, di un prodotto nel carrello
-   * 
-   * @param:idP identifica il prodotto da aggiungere nel carrello 
-   */
+  
 function addToBasket(idP){
   var data={
     idP:idP,
@@ -353,15 +367,17 @@ function addToBasket(idP){
       
     
       
+     // alert(response);
     },
     error: function (error) {
       console.error(error);
+      alert("ERROR UPLOADING!");
     }
   });
 }
 
 
-/*
+
 function check_field(){
   var password1 = document.getElementById("password1").value;
   var password2 = document.getElementById("password2").value;
@@ -373,7 +389,11 @@ function check_field(){
     $.ajax({
       type: 'POST',
       url:'signIn.php',
-      data: "name="+nome +"&password=" + password1 +"&email=" + email          
+      //contentType: 'text',
+      //dataType: 'text',
+      data: "name="+nome +"&password=" + password1 +"&email=" + email 
+          //name: "nome"
+         
       ,
       success: function(response){
         
@@ -398,13 +418,7 @@ function check_field(){
 
 
 }
-*/
 
-/**
- * Funzione che incrementa la quantità da acquistare 
- * 
- * @param:idP identifica il prodotto da incrementare
- */
 function incBasketQty(idP){
 
 
@@ -456,12 +470,6 @@ function incBasketQty(idP){
   
 }
 
-
-/**
- * Funzione che decrementa la quantità da acquistare 
- * 
- * @param:idP identifica il prodotto da decrementare
- */
 function decBasketQty(idP){
 
   var data={
@@ -522,13 +530,6 @@ function decBasketQty(idP){
 
   
 }
-
-
-/**
- * Funzione che elimina il prodotto nel carrello 
- * 
- * @param:idP identifica il prodotto da eliminare
- */
 function delBasketP(idP){
   var data={
     idP:idP,
@@ -588,11 +589,7 @@ function delBasketP(idP){
 
 }
 
-/**
- * Funzione che  manda una richiesta per caricare la foto di un prodotto sul server 
- * 
- * @param:idP identifica il prodotto del quale caricare la foto
- */
+
 function upload(idP) {
 
     var formData = new FormData();
@@ -601,6 +598,9 @@ function upload(idP) {
     formData.append('function',"upload");
 
     console.log(formData);
+
+
+
    $.ajax({
       url: 'uploadImg.php',
       type: 'POST',
@@ -614,53 +614,66 @@ function upload(idP) {
         var msg=document.getElementById("flash");
         msg.innerHTML=response[0].msg;
         $("#flash").fadeOut(4000);
-       
+        //console.log('Image uploaded successfully!'+response);
+        //alert(response)
+        //JSON.parse(JSON.stringify(response))
         var img=new Image();
           img.src = response[0].src;
         
         var imageCell = document.getElementById("img_id"+idP);
         imageCell.innerHTML = " "; // Clear the cell's contents
        imageCell.appendChild(img); 
+       // alert(response);
       },
       error: function (error) {
         console.error(error);
+        //alert("ERROR UPLOADING!"+error);
       }
     });
   //})
 }
 
 
-/**
- * Funzione che  manda una richiesta per salvare definitivamente sul db le eventuali modifiche
- * 
- * @param:idP identifica il prodotto del quale salvare le modifiche
- */
+
 function saveData(idP){
   
     
   var data={
     nomeP:document.getElementById("nameP"+idP).value,
     typeP:document.getElementById("typeP"+idP).value,
+    //typeP:$("typeP"+idP).val(),
     priceP:document.getElementById("priceP"+idP).value,
     newImage:document.getElementById("newImage"+idP).value,
     desc:document.getElementById("descP"+idP).value,
     id:idP,
     function:"saveData",
+
+
+
   }
 
   $.ajax({
     type: 'POST',
     url:'saveModify.php',
     contentType: "application/json",
-    data:JSON.stringify(data),
+    data:JSON.stringify(data),//"name="+nome +"&password=" + password1 +"&email=" + email  //devo passargli gli oggetti json
    
     
     success: function(response){
+      //alert("PHP CODE EXECUTED",response);
           $("#flash").fadeIn(1000);
           var msg=document.getElementById("flash")
           msg.innerHTML="Prodotto modificato correttamente";
           $("#flash").fadeOut(4000);
           
+      
+      
+
+      //location.reload(true);
+
+      //document.getElementById("flash>").innerHTML="Modifiche riuscite";
+      
+      //location.href = "user.php"
     },
     error: function(e) {
       //called when there is an error
@@ -676,17 +689,11 @@ function saveData(idP){
 
 
 }
-
-/**
- * Funzione che  manda una richiesta per eliminare un prodotto dalla vendita (e quindi dal db) 
- * e eventualmente anche dai carrelli dei clienti
- * 
- * @param:idP identifica il prodotto da eliminare
- */
 function deleteProduct(idP){
   var data={idP:idP,
             function:"delete"
           }
+//          alert("delete BTN CLICCKED -->"+ data["idP"]+" "+data["function"]);
 
   $.ajax({
     type: 'POST',
@@ -695,6 +702,7 @@ function deleteProduct(idP){
     data:JSON.stringify(data),
     success: function(response){
         
+      //alert("PHP CODE EXECUTED",response);
       var prodotto = document.getElementById("prodotto"+idP);
       prodotto.innerHTML = ""; // Clear the cell's contents
       
@@ -702,9 +710,14 @@ function deleteProduct(idP){
       var msg=document.getElementById("flash")
       msg.innerHTML="Prodotto modificato correttamente";
       $("#flash").fadeOut(4000);
-    
+      //location.reload(true);
+
+      //document.getElementById("flash>").innerHTML="Modifiche riuscite";
+      
+      //location.href = "user.php"
     },
     error: function(e) {
+      //called when there is an error
       alert("PHP CODE ERROR");
 
       console.log(e.message);
@@ -715,11 +728,6 @@ function deleteProduct(idP){
 
 }
 
-/**
- * Funzione che  manda una richiesta per aggiunngere un nuovo prodotto in vendita (e quindi sul db)
- * 
- * @param:idP è l'identificatore del nuovo prodotto
- */
 function addNewProducts(idP){
 
   var data={
@@ -803,30 +811,29 @@ function addNewProducts(idP){
 
   }
 
+  /*funzioni per gestire il drag&drop*/
 
-//Funzioni per gestire il drag and drop
   function allowDrop(ev) {
     ev.preventDefault();
   }
   
-  /**
-   * Funzione per gestire il drag
-   */
   function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
   }
   
-  /**
-   * 
-   * Funzione per gestire il drop, quando un prodotto draggable viene droppato in una apposita zona
-   * si aggiunge il prodotto nel carrello  
-   */
   function drop(ev) {
 
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    //alert(data);
     addToBasket(data);
+    //ev.target.appendChild(document.getElementById(data));
   
   }
+
+  
+
+
+/*-------------------------------*/
 
 

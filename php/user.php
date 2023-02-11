@@ -16,7 +16,7 @@
   <h2>Log in</h2>
   <form id="login" action="login.php" method="post">
     <dl>
-      <dt>Email</dt>     <dd><input type="text" name="email" ></dd>
+      <dt>Email</dt>     <dd><input type="email" name="email" ></dd>
       <dt>Password</dt> <dd><input type="password" name="password" ></dd>
       <dt> </dt>        <dd><button type="submit"  >Log in</button></dd>
     </dl>
