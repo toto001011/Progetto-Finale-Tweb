@@ -1,11 +1,31 @@
 <?php
 //File php che contiene parte delle funzioni che vengono usate dal javascript
 include("login.php");
-  
+            /**
+             * File php che contiene parte delle funzioni che vengono usate dal javascript
+             * Tutte le "funzioni" hanno come @param un file json simile al seguente
+             * var data{
+             *  idP="1" //id del prodotto 
+             * //altre informazioni 
+             * }
+             * 
+             */
          $data = json_decode(file_get_contents('php://input'), true);
          if($data["function"]=="visualize_basket"){
+           /*
+             Porzione che visualizza i prodotti del carrello
+            @return una array di file json {
+                name:"nome Prodotto",
+                type:"tipo Prodotto",
+                price:"Prezzo Prodotto",
+                img:"immagine",
+                id:"id",
+                qty:"quantità"
+            }
+
             
-        //FUNZIONE CHE ESTRAE I PRODOTTI NEL CARRELLO
+            */
+        
         $dbconnstring = 'mysql:dbname=shop;host=localhost:3306';
         $dbuser = 'root';
         $dbpasswd = '';
@@ -22,8 +42,19 @@ include("login.php");
 
        }else
        if($data["function"]=="visualize_products"){
-            //FUNZIONE CHE ESTRAE I PRODOTTI IN VENDITA
-        $dbconnstring = 'mysql:dbname=shop;host=localhost:3306';
+/*
+             Porzione che visualizza i prodotti in vendita
+            @return una array di file json {
+                name:"nome Prodotto",
+                type:"tipo Prodotto",
+                price:"Prezzo Prodotto",
+                img:"immagine",
+                desc:"descrizione",
+                id:"id"
+            }
+
+            
+            */        $dbconnstring = 'mysql:dbname=shop;host=localhost:3306';
         $dbuser = 'root';
         $dbpasswd = '';
        $query="SELECT * FROM products";
@@ -40,7 +71,21 @@ include("login.php");
 
        }else
          if($data["function"]=="addNewProducts"){
-            //FUNZIONE CHE AGGIUNGE UN NUOVO PRODOTTO IN VENDITA(admin)
+            
+            /* PORZIONE CHE AGGIUNGE UN NUOVO PRODOTTO IN VENDITA(admin)
+                @param data
+                
+                data={
+                    nomeP:"nome prodotto",
+                    typeP:"tipo prodotto",
+                    priceP:"prezzo prodotto",
+                    id:"id prodotto",
+                    desc:"descrizione prodotto",
+                    function:"addNewProducts"
+                }
+
+             
+             */
             $idP=$data["idP"];
             $lastIndex=get_last_index();
             echo($lastIndex);
@@ -50,7 +95,20 @@ include("login.php");
          
          
                 if($data["function"]=="saveData"){
-                    //FUNZIONE CHE SALVA LE MODOFICHE SUI PRODOTTI IN VENDITA(admin)
+                    /*PORZIONE CHE SALVA LE MODOFICHE SUI PRODOTTI IN VENDITA(admin)
+                @param data
+                
+                data={
+                    nomeP:"nome prodotto",
+                    typeP:"tipo prodotto",
+                    priceP:"prezzo prodotto",
+                    id:"id prodotto",
+                    desc:"descrizione prodotto",
+                    function:"saveData"
+                }
+                 
+             
+             */
                 $nameP=$data["nomeP"];
                 $typeP=$data["typeP"];
                 $priceP=$data["priceP"];
@@ -86,7 +144,14 @@ include("login.php");
 
                     }else 
                 if($data["function"]=="delete"){
-                    //FUNZIONE CHE ELIMINA UN PRODOTTO DALLA VENTIDA(admin)
+                    
+                    /*PORZIONE CHE ELIMINA UN PRODOTTO DALLA VENTIDA(admin)
+                        @param data
+                        data{
+                            function:"delete",
+                            idP:"id Prodotto"
+                        }
+                    */
 
                     $idP=$data["idP"];
                 
@@ -95,7 +160,17 @@ include("login.php");
 
                 }else
                 if($data["function"]=="addToBasket"){
-                    //FUNZIONE CHE AGGIUNGE UN PRODOTTO NEL CARRELLO(user)
+                    
+
+                     
+                    /*PORZIONE CHE AGGIUNGE UN PRODOTTO NEL CARRELLO(user)
+                        @param data
+                        data{
+                            function:"addToBasket",
+                            idP:"id Prodotto"
+                        }
+                    */
+
                     $email=$_SESSION["email"];
                     $password =$_SESSION["password"];
                     $idP=$data["idP"];
@@ -109,8 +184,14 @@ include("login.php");
 
                 } else 
                 if($data["function"]=="decBasketQty"){
-                    //FUNZIONE CHE DECREMENTA LA QUANTITA' DI UN PRODOTTO NEL CARRELLO
                     
+                     /*PORZIONE CHE DECREMENTA LA QUANTITA' DI UN PRODOTTO NEL CARRELLO
+                        @param data
+                        data{
+                            function:"decBasketQty",
+                            idP:"id Prodotto"
+                        }
+                    */
 
 
 
@@ -120,7 +201,15 @@ include("login.php");
                         decBasketQty($email,$idP);
                 }else
                  if($data["function"]=="incBasketQty"){
-                    //FUNZIONE CHE INCREMENTA LA QUANTITA' DI PRODOTTO DEL CARRELLO
+                    
+                    /*PORZIONE CHE INCREMENTA LA QUANTITA' DI PRODOTTO DEL CARRELLO
+                        @param data
+                        data{
+                            function:"incBasketQty",
+                            idP:"id Prodotto"
+                        }
+                    */
+
                     
                     $email=$_SESSION["email"];
                     $idP=$data["idP"];

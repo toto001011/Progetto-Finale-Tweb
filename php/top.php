@@ -6,7 +6,8 @@
 <html>
   <head>
     <title>Salvatore Online Shop</title>
-    <link href="../css/products.css" type="text/css" rel="stylesheet">
+    <link href="../css/shop.css" type="text/css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
     <script src="../js/jquery-3.6.1.js"></script>
     <script src="../js/Visualize.js" type="text/javascript"></script>
 
@@ -19,8 +20,8 @@
 
     <div class="navigation">
     <ul id="navigation">
-      <li><a href="index.php">Main Page</a></li>
-      <li><a id="productsBtn"  href="products.php">Products</a></li>
+      <li><a href="index.php">Home</a></li>
+      <li><a id="productsBtn"  href="products.php">Prodotti</a></li>
       <li><a href="user.php">Log In/Out</a></li>
     </ul>
 </div>

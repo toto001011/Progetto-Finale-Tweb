@@ -13,7 +13,7 @@ if (!isset($_SESSION)) { session_start(); }
  * @param $email: definisce l'utente
  * @param $password: definisce la password da verificare 
  * 
- * @return: true se è corretta, false altrimenti
+ * @return: 1 se è corretta, 0 altrimenti
  *  */ 
 function is_password_correct($email, $password) {
   global $dbconnstring, $dbuser, $dbpasswd;
@@ -38,7 +38,7 @@ function is_password_correct($email, $password) {
  * @param $user: definisce l'utente da verificare 
  * @param $password: definisce la password da verificare 
  * 
- * @return: true se è corretta ed esiste un utende admin chiamato $user, false altrimenti
+ * @return: 1 se è corretta ed esiste un utende admin chiamato $user, 0 altrimenti
  *  */ 
 function is_admin_password_correct($user, $password){
   global $dbconnstring, $dbuser, $dbpasswd;
@@ -57,17 +57,7 @@ function is_admin_password_correct($user, $password){
 
 
 
-/*
-if (isset($_POST['get_all_products'])) {
-  function get_all_products() {
-    global $dbconnstring, $dbuser, $dbpasswd;
-    $db = new PDO($dbconnstring, $dbuser, $dbpasswd);
-    return $db->query("SELECT * 
-                      FROM products
-                      ");
-  }
-}
-*/
+
 /**
  *Modifica nel db un determinato prodotto con le nuove informazioni
  * 
