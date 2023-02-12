@@ -20,7 +20,7 @@ if (isset($_FILES['file']) ) {
     if ($fileError === 0) {
       if ($fileSize < 65536) {
         $fileNameNew ="idP".$idP.".".$fileActualExt;
-        $fileDestination = 'upload/'.$fileNameNew;
+        $fileDestination = '../upload/'.$fileNameNew;
         move_uploaded_file($fileTmpName, $fileDestination);
         
    
